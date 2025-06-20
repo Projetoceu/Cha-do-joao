@@ -6,37 +6,83 @@
   <title>Chá do João Victor – Lista de Presentes</title>
   <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
   <style>
-    body { margin: 0; padding: 0; font-family: Arial, sans-serif; background: #b3d0b3; color: #5F805F; }
-    header { background: #fff; text-align: center; padding: 10px; }
-    .lateral-esquerda, .lateral-direita {
-      position: fixed;
-      top: 0;
-      width: 150px;
-      height: 100%;
-      background: url('floresta_lateral.jpg') center/cover no-repeat;
-      z-index: -1;
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #b3d0b3;
+      color: #5F805F;
     }
-    .lateral-esquerda { left: 0; }
-    .lateral-direita { right: 0; }
-    .animal-strip { font-size: 48px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-    .container { max-width: 900px; margin: auto; padding: 20px; text-align: center; }
-    .galeria { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; justify-content: center; }
-    .item { width: 220px; height: 320px; border: 1px solid #5F805F; border-radius: 10px; padding: 10px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; background: #fff; }
-    .item .emoji { font-size: 48px; }
-    button { background: #5F805F; color: #fff; border: none; padding: 10px; border-radius: 5px; cursor: pointer; margin: 5px; }
+    header {
+      background: #fff;
+      text-align: center;
+      padding: 10px;
+    }
+    .animal-strip {
+      font-size: 48px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+      text-align: center;
+    }
+    .galeria {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .item {
+      border: 1px solid #5F805F;
+      border-radius: 10px;
+      padding: 10px;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .item .emoji {
+      font-size: 48px;
+    }
+    button {
+      background: #5F805F;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 5px;
+    }
     @media (max-width: 768px) {
-      .galeria { grid-template-columns: repeat(2, 1fr); }
-      .modal-content { width: 95% !important; }
-      .animal-strip { font-size: 32px !important; flex-wrap: wrap; }
-      #titulo { font-size: 1.8em !important; }
+      .animal-strip {
+        font-size: 32px;
+      }
+      #titulo {
+        font-size: 1.8em;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="lateral-esquerda"></div>
-  <div class="lateral-direita"></div>
   <header>
-    <div class="animal-strip">🐵🦊🦉🦒🦝 🦁 🐯🐘🐸🐢🦜</div>
+    <div class="animal-strip" style="align-items: baseline;">
+  <span style="font-size:45px; line-height: 1;">🐵</span>
+  <span style="font-size:50px; line-height: 1;">🦊</span>
+  <span style="font-size:55px; line-height: 1;">🦉</span>
+  <span style="font-size:60px; line-height: 1;">🦒</span>
+  <span style="font-size:65px; line-height: 1;">🦝</span>
+  <span style="font-size:84px; line-height: 1;">🦁</span>
+  <span style="font-size:65px; line-height: 1;">🐯</span>
+  <span style="font-size:60px; line-height: 1;">🐘</span>
+  <span style="font-size:55px; line-height: 1;">🐸</span>
+  <span style="font-size:50px; line-height: 1;">🐢</span>
+  <span style="font-size:45px; line-height: 1;">🦜</span>
+</div>
     <h1 id="titulo" style="text-transform:uppercase; font-family:'Chewy', cursive; font-size:2.5em;">CHÁ DO JOÃO VICTOR</h1>
   </header>
   <div class="container">
@@ -109,9 +155,9 @@ function renderizarPresentes() {
       <div class="emoji">${produto.emoji}</div>
       <h3>${produto.nome}</h3>
       <p><strong>Valor:</strong> R$ ${produto.valor.toFixed(2).replace('.', ',')}</p>
-      ${produto.cotas > 0 ? `<p><strong>Cotas disponíveis:</strong> ${produto.cotas}</p>
-      <button onclick="presentear(${produto.id})">PRESENTEAR</button>` : `<p style='color:gray'><strong>ESGOTADO</strong></p>
-      <button disabled style='background:gray;cursor:not-allowed'>ESGOTADO</button>`}`;
+      ${produto.cotas > 0
+        ? `<p><strong>Cotas disponíveis:</strong> ${produto.cotas}</p><button onclick="presentear(${produto.id})">PRESENTEAR</button>`
+        : `<p style='color:gray'><strong>ESGOTADO</strong></p><button disabled style='background:gray;cursor:not-allowed'>ESGOTADO</button>`}`;
     galeria.appendChild(item);
   });
 }
@@ -121,27 +167,23 @@ function presentear(id) {
   if (!produto || produto.cotas <= 0) return;
   const modal = document.createElement('div');
   modal.className = 'modal show';
-  modal.style.position = 'fixed';
-  modal.style.top = 0;
-  modal.style.left = 0;
-  modal.style.width = '100%';
-  modal.style.height = '100%';
-  modal.style.background = 'rgba(0,0,0,0.5)';
-  modal.style.display = 'flex';
-  modal.style.justifyContent = 'center';
-  modal.style.alignItems = 'center';
+  Object.assign(modal.style, {
+    position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.5)',
+    display: 'flex', justifyContent: 'center', alignItems: 'center'
+  });
   modal.innerHTML = `
-    <div class='modal-content' style='background:#fff;padding:30px;border-radius:10px;box-shadow:0 0 15px rgba(0,0,0,.3);max-width:500px;width:90%;text-align:center;position:relative'>
-      
+    <div class='modal-content' style='background:#e6f5e6;padding:30px;border-radius:10px;box-shadow:0 0 15px rgba(0,0,0,.3);max-width:500px;width:90%;text-align:center'>
       <div style='font-size:64px;'>${produto.emoji}</div>
       <h2>${produto.nome}</h2>
       <p style='font-size:1.2em;color:black;font-weight:bold'>Valor: R$ ${produto.valor.toFixed(2).replace('.', ',')}</p>
-      <p style='font-size:1.1em;color:black'>Chave Pix: <strong>065.755.339-57</strong> <button onclick="navigator.clipboard.writeText('06575533957');this.textContent='Copiado!';setTimeout(()=>this.textContent='Copiar',2000);">Copiar</button><br><img src='/QrCode.jpeg' alt='QR Code Pix' style='margin-top:10px;width:150px;height:150px;display:block;margin-left:auto;margin-right:auto;'></p>
+      <p style='font-size:1.1em;color:black'>Chave Pix: <strong>065.755.339-57</strong>
+        <button onclick="navigator.clipboard.writeText('06575533957');this.textContent='Copiado!';setTimeout(()=>this.textContent='Copiar',2000);">Copiar</button><br>
+        <span style='font-size:0.65em;color:gray;'>Renato Augusto Dândalo</span><br><img src='/QrCode.jpeg' alt='QR Code Pix' style='margin-top:10px;width:150px;height:150px;display:block;margin-left:auto;margin-right:auto;'>
+      </p>
       <p>Papai, mamãe e João agradecem o presente!</p>
       <div style='font-size: 1em; text-align: center;'>❤️</div>
       <button onclick="confirmarPresente(${produto.id})" style='margin-top:10px;background:#5F805F;color:#fff;padding:10px 20px;border:none;border-radius:5px;font-weight:bold;cursor:pointer'>Finalizar</button>
-    </div>
-  `;
+    </div>`;
   document.body.appendChild(modal);
 }
 
