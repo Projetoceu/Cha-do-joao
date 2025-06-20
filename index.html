@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chá do João Victor – V8</title>
+  <title>Chá do João Victor – Lista de Presentes</title>
   <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
   <style>
     body { margin: 0; padding: 0; font-family: Arial, sans-serif; background: #b3d0b3; color: #5F805F; }
@@ -26,7 +26,6 @@
     button { background: #5F805F; color: #fff; border: none; padding: 10px; border-radius: 5px; cursor: pointer; margin: 5px; }
     @media (max-width: 768px) {
       .galeria { grid-template-columns: repeat(2, 1fr); }
-      .item { width: 220px; height: 320px; border: 1px solid #5F805F; border-radius: 10px; padding: 10px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; background: #fff; }
       .modal-content { width: 95% !important; }
       .animal-strip { font-size: 32px !important; flex-wrap: wrap; }
       #titulo { font-size: 1.8em !important; }
@@ -38,7 +37,7 @@
   <div class="lateral-direita"></div>
   <header>
     <div class="animal-strip">🐵🦊🦉🦒🦝 🦁 🐯🐘🐸🐢🦜</div>
-    <h1 id="titulo" style="text-transform:uppercase; font-family:'Chewy', cursive; font-size:2.5em;">CHÁ DO JOÃO VICTOR - V8</h1>
+    <h1 id="titulo" style="text-transform:uppercase; font-family:'Chewy', cursive; font-size:2.5em;">CHÁ DO JOÃO VICTOR</h1>
   </header>
   <div class="container">
     <h2 style="margin-top:20px; text-transform:uppercase;">Lista de Presentes</h2>
@@ -46,151 +45,115 @@
     <div id="presentes" class="galeria"></div>
   </div>
 <script>
-const nomesProdutos = [
-  "Cuequinha Antiestresse", "Mamadeira Turbo 3000", "Fralda com Bluetooth", "Roupão Jedi Baby",
-  "Patinho GPS de Banho", "Body Estampado de Dinossauro", "Babador Wi-Fi", "Naninha Falante",
-  "Termômetro Musical", "Tapete de Dança Baby", "Kit Higiene com Glitter", "Travesseiro Antigravidade",
-  "Copo Anti-Vazamento Jedi", "Almofada com Memória Afetiva", "Livro Mágico de Banho", "Canguru com Suspensório Ninja",
-  "Cadeirinha com Ejetor de Risadas", "Organizador Intergaláctico", "Fralda Recarregável", "Berço com Porta USB",
-  "Cortador de Unha com Lanterna", "Mochila com Porta Fralda Emergencial", "Termômetro Inteligente", "Tapete com Alarme de Soneca",
-  "Trocador com Wi-Fi", "Cobertor Antiestresse", "Touca com Isolamento Térmico", "Meias de Super-Herói",
-  "Toalha que Abraça", "Travesseiro Sonífero", "Kit Talheres Gamer", "Lençol Autolimpante",
-  "Pote Térmico com Bluetooth", "Mordedor de Arco-Íris", "Sabonete com Aroma de Ursinho", "Kit Spa Bebê",
-  "Babá Eletrônica com IA", "Cadeira Musical de Alimentação", "Troninho com Feedback Sonoro", "Kit Penteado Fashion Baby",
-  "Touca para Sonhos Doces", "Almofada que Conta Histórias", "Colchonete Inflável Mágico", "Carregador de Bebê Humano",
-  "Macacão com GPS", "Fralda Noturna com Luz de LED", "Toalhas que Fazem Cócegas", "Copo de Pré-Treinamento infantil"
+const produtos = [
+  { id: 100, nome: "Chocalho Espacial", emoji: "🪐", valor: 35.25, cotas: 0 },
+  { id: 101, nome: "Babador de Bolinhas", emoji: "🧣", valor: 42.50, cotas: 0 },
+  { id: 102, nome: "Meias com Sininhos", emoji: "🧦", valor: 48.75, cotas: 0 },
+  { id: 0, nome: "Cuequinha Antiestresse", emoji: "🩲", valor: 57.25, cotas: 5 },
+  { id: 1, nome: "Mamadeira Turbo 3000", emoji: "🍼", valor: 66.50, cotas: 4 },
+  { id: 2, nome: "Fralda com Bluetooth", emoji: "🧷", valor: 85.00, cotas: 7 },
+  { id: 3, nome: "Roupão Jedi Baby", emoji: "🛁", valor: 77.25, cotas: 6 },
+  { id: 4, nome: "Patinho GPS de Banho", emoji: "🦆", valor: 70.75, cotas: 5 },
+  { id: 5, nome: "Body Estampado de Dinossauro", emoji: "👕", valor: 77.75, cotas: 4 },
+  { id: 6, nome: "Babador Wi-Fi", emoji: "🧣", valor: 59.25, cotas: 3 },
+  { id: 7, nome: "Naninha Falante", emoji: "🧸", valor: 81.00, cotas: 6 },
+  { id: 8, nome: "Termômetro Musical", emoji: "🌡️", valor: 91.25, cotas: 3 },
+  { id: 9, nome: "Tapete de Dança Baby", emoji: "🩰", valor: 83.75, cotas: 4 },
+  { id: 10, nome: "Kit Higiene com Glitter", emoji: "🧼", valor: 68.75, cotas: 8 },
+  { id: 11, nome: "Travesseiro Antigravidade", emoji: "🛌", valor: 86.25, cotas: 4 },
+  { id: 12, nome: "Copo Anti-Vazamento Jedi", emoji: "🥤", valor: 81.25, cotas: 5 },
+  { id: 13, nome: "Almofada com Memória Afetiva", emoji: "🛋️", valor: 72.75, cotas: 4 },
+  { id: 14, nome: "Livro Mágico de Banho", emoji: "📖", valor: 96.00, cotas: 3 },
+  { id: 15, nome: "Canguru com Suspensório Ninja", emoji: "🦘", valor: 93.50, cotas: 4 },
+  { id: 16, nome: "Cadeirinha com Ejetor de Risadas", emoji: "🪑", valor: 95.75, cotas: 5 },
+  { id: 17, nome: "Organizador Intergaláctico", emoji: "🗃️", valor: 95.75, cotas: 5 },
+  { id: 18, nome: "Fralda Recarregável", emoji: "🧷", valor: 72.75, cotas: 3 },
+  { id: 19, nome: "Berço com Porta USB", emoji: "🛏️", valor: 59.25, cotas: 5 },
+  { id: 20, nome: "Cortador de Unha com Lanterna", emoji: "✂️", valor: 93.50, cotas: 4 },
+  { id: 21, nome: "Mochila com Porta Fralda Emergencial", emoji: "🎒", valor: 78.25, cotas: 3 },
+  { id: 22, nome: "Termômetro Inteligente", emoji: "🌡️", valor: 57.75, cotas: 6 },
+  { id: 23, nome: "Tapete com Alarme de Soneca", emoji: "🧸", valor: 92.75, cotas: 3 },
+  { id: 24, nome: "Trocador com Wi-Fi", emoji: "🔄", valor: 64.00, cotas: 3 },
+  { id: 25, nome: "Cobertor Antiestresse", emoji: "🛏️", valor: 98.50, cotas: 4 },
+  { id: 26, nome: "Touca com Isolamento Térmico", emoji: "🧢", valor: 65.75, cotas: 5 },
+  { id: 27, nome: "Meias de Super-Herói", emoji: "🧦", valor: 68.00, cotas: 3 },
+  { id: 28, nome: "Toalha que Abraça", emoji: "🧻", valor: 88.75, cotas: 4 },
+  { id: 29, nome: "Travesseiro Sonífero", emoji: "🛌", valor: 74.50, cotas: 3 },
+  { id: 30, nome: "Kit Talheres Gamer", emoji: "🍴", valor: 78.75, cotas: 4 },
+  { id: 31, nome: "Lençol Autolimpante", emoji: "🛏️", valor: 71.75, cotas: 8 },
+  { id: 32, nome: "Pote Térmico com Bluetooth", emoji: "🥣", valor: 92.75, cotas: 4 },
+  { id: 33, nome: "Mordedor de Arco-Íris", emoji: "🌈", valor: 82.25, cotas: 6 },
+  { id: 34, nome: "Sabonete com Aroma de Ursinho", emoji: "🧼", valor: 79.00, cotas: 5 },
+  { id: 35, nome: "Kit Spa Bebê", emoji: "💆", valor: 59.00, cotas: 8 },
+  { id: 36, nome: "Babá Eletrônica com IA", emoji: "🎥", valor: 97.75, cotas: 6 },
+  { id: 37, nome: "Cadeira Musical de Alimentação", emoji: "🪑", valor: 92.25, cotas: 3 },
+  { id: 38, nome: "Troninho com Feedback Sonoro", emoji: "🚽", valor: 63.75, cotas: 7 },
+  { id: 39, nome: "Kit Penteado Fashion Baby", emoji: "💇", valor: 83.75, cotas: 3 },
+  { id: 40, nome: "Touca para Sonhos Doces", emoji: "🧢", valor: 55.75, cotas: 4 },
+  { id: 41, nome: "Almofada que Conta Histórias", emoji: "🛋️", valor: 82.75, cotas: 5 },
+  { id: 42, nome: "Colchonete Inflável Mágico", emoji: "🛏️", valor: 101.50, cotas: 8 },
+  { id: 43, nome: "Carregador de Bebê Humano", emoji: "🎒", valor: 89.75, cotas: 6 },
+  { id: 44, nome: "Macacão com GPS", emoji: "🧥", valor: 101.25, cotas: 4 },
+  { id: 45, nome: "Fralda Noturna com Luz de LED", emoji: "💡", valor: 55.75, cotas: 3 },
+  { id: 46, nome: "Toalhas que Fazem Cócegas", emoji: "🧻", valor: 88.50, cotas: 8 },
+  { id: 47, nome: "Copo de Pré-Treinamento infantil", emoji: "🥤", valor: 84.25, cotas: 4 }
 ];
 
-let presentes = [];
-
-fetch("https://script.google.com/macros/s/AKfycbxF7l5PA4A0hjTSmudts708hj6ANfxFiOrNmNdgeuL7-fbei1O08zbSd6wRye5nl-XVDA/exec")
-  .then(res => res.json())
-  .then(data => {
-    presentes = data;
-    renderizarPresentes();
-  });
-
-function emoji(nome) {
-  const mapa = {
-    cuequinha: '🩲', mamadeira: '🍼', fralda: '🧷', roupão: '🛁', patinho: '🦆',
-    body: '👕', babador: '🧣', naninha: '🧸', termômetro: '🌡️', tapete: '🧸',
-    higiene: '🧼', travesseiro: '🛌', copo: '🥤', almofada: '🛋️', livro: '📖',
-    canguru: '🦘', cadeirinha: '🪑', organizador: '🗃️', berço: '🛏️',
-    cortador: '✂️', mochila: '🎒', trocador: '🔄', cobertor: '🛌',
-    touca: '🧢', meias: '🧦', toalha: '🧻', talheres: '🍴', lençol: '🛏️',
-    pote: '🥣', mordedor: '🦷', sabonete: '🧼', spa: '💆', babá: '🎥',
-    cadeira: '🪑', troninho: '🚽', penteado: '💇', colchonete: '🛏️',
-    carregador: '🎒', macacão: '🧥', led: '💡', felicidade: '😊'
-  };
-  const chave = Object.keys(mapa).find(k => nome.toLowerCase().includes(k));
-  return mapa[chave] || '🎁';
-}
 function renderizarPresentes() {
   const galeria = document.getElementById('presentes');
   galeria.innerHTML = '';
-  presentes.forEach((p, i) => {
-    const nomeFinal = nomesProdutos[p.id] || p.nome;
-    const esgotado = p.cotas <= 0;
-    const div = document.createElement('div');
-    div.className = 'item';
-    div.innerHTML = `
-      <div class="emoji">${emoji(nomeFinal)}</div>
-      <h3 style="color:${esgotado ? 'gray' : 'inherit'}">${nomeFinal}</h3>
-      <p style="color:${esgotado ? 'gray' : 'black'}; font-weight:bold">Valor: R$ ${p.valor}</p>
-      ${!esgotado ? `<p>Cotas disponíveis: ${p.cotas}</p>` : ''}
-      <button onclick="presentear(${i})" style="background:${esgotado ? 'gray' : '#5F805F'}; cursor:${esgotado ? 'not-allowed' : 'pointer'}">${esgotado ? 'ESGOTADO' : 'PRESENTEAR'}</button>
-    `;
-    galeria.appendChild(div);
+  produtos.forEach(produto => {
+    const item = document.createElement('div');
+    item.className = 'item';
+    item.innerHTML = `
+      <div class="emoji">${produto.emoji}</div>
+      <h3>${produto.nome}</h3>
+      <p><strong>Valor:</strong> R$ ${produto.valor.toFixed(2)}</p>
+      ${produto.cotas > 0 ? `<p><strong>Cotas disponíveis:</strong> ${produto.cotas}</p>
+      <button onclick="presentear(${produto.id})">PRESENTEAR</button>` : `<p style='color:gray'><strong>ESGOTADO</strong></p>
+      <button disabled style='background:gray;cursor:not-allowed'>ESGOTADO</button>`}`;
+    galeria.appendChild(item);
   });
 }
-function presentear(index) {
-  const p = presentes[index];
-  if (!p || p.cotas <= 0) return;
-  const nomeFinal = nomesProdutos[p.id] || p.nome;
+
+function presentear(id) {
+  const produto = produtos.find(p => p.id === id);
+  if (!produto || produto.cotas <= 0) return;
   const modal = document.createElement('div');
   modal.className = 'modal show';
-  modal.style = 'position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; justify-content:center; align-items:center; z-index:1000;';
+  modal.style.position = 'fixed';
+  modal.style.top = 0;
+  modal.style.left = 0;
+  modal.style.width = '100%';
+  modal.style.height = '100%';
+  modal.style.background = 'rgba(0,0,0,0.5)';
+  modal.style.display = 'flex';
+  modal.style.justifyContent = 'center';
+  modal.style.alignItems = 'center';
   modal.innerHTML = `
-    <div class='modal-content' style='background:#fff; padding:30px; border-radius:10px; max-width:500px; width:90%; text-align:center; position:relative;'>
-      <button onclick='fecharModal()' style='position:absolute;top:10px;right:10px;'>❌</button>
-      <div style='font-size:64px;'>${emoji(nomeFinal)}</div>
-      <h2>${nomeFinal}</h2>
-      <p style='font-size:1.2em;color:black;font-weight:bold'>Valor: R$ ${p.valor}</p>
-      <p style='font-size:1.1em;color:black'>Chave Pix: <strong>065.755.339-57</strong> <button onclick='copiarPix(this)'>Copiar</button></p>
-      <p style='margin-top:10px;color:#4CAF50;font-weight:bold'>Papai, mamãe e João agradecem de coração pelo presente! ❤️</p>
-      <hr style='margin:20px 0'>
-      <h2>Mensagem para o João</h2>
-      <label>Seu nome:</label><br>
-      <input type='text' id='nomeMsg' maxlength='50' style='width:90%;margin:5px'><br>
-      <label>Deixe sua mensagem:</label><br>
-      <textarea id='textoMsg' maxlength='500' oninput='atualizarContador()' style='width:90%;height:100px;margin:5px'></textarea><br>
-      <div id='contadorMsg'>500 caracteres restantes</div>
-      <button onclick='enviarMensagem()'>Enviar Mensagem</button>
-    </div>`;
-  document.body.appendChild(modal);
-  produtoAtual = p;
-  atualizarContador();
-  produtoAtual = p;
-  atualizarContador();
+    <div class='modal-content' style='background:#fff;padding:30px;border-radius:10px;box-shadow:0 0 15px rgba(0,0,0,.3);max-width:500px;width:90%;text-align:center;position:relative'>
+      <button onclick="document.body.removeChild(this.closest('.modal'))" style="position:absolute;top:10px;right:10px;background:none;border:none;font-size:20px;cursor:pointer">❌</button>
+      <div style='font-size:64px;'>${produto.emoji}</div>
+      <h2>${produto.nome}</h2>
+      <p style='font-size:1.2em;color:black;font-weight:bold'>Valor: R$ ${produto.valor.toFixed(2)}</p>
+      <p style='font-size:1.1em;color:black'>Chave Pix: <strong>065.755.339-57</strong><br><img src='/QrCode.jpeg' alt='QR Code Pix' style='margin-top:10px;width:150px;height:150px;display:block;margin-left:auto;margin-right:auto;'></p>
+      <p>Papai, mamãe e João agradecem o presente!</p>
+      <button onclick="confirmarPresente(${produto.id})" style='margin-top:10px;background:#5F805F;color:#fff;padding:10px 20px;border:none;border-radius:5px;font-weight:bold;cursor:pointer'>Presente Enviado</button>
+    </div>
+  `;
   document.body.appendChild(modal);
 }
 
-function fecharModal() {
+function confirmarPresente(id) {
+  const produto = produtos.find(p => p.id === id);
+  if (!produto || produto.cotas <= 0) return;
+  produto.cotas--;
   document.querySelectorAll('.modal').forEach(m => m.remove());
+  renderizarPresentes();
+  alert('Obrigado pela mensagem e pelo presente!');
 }
 
-function copiarPix(btn) {
-  navigator.clipboard.writeText('06575533957');
-  btn.textContent = 'Copiado!';
-  setTimeout(() => btn.textContent = 'Copiar', 2000);
-}
-
-function atualizarContador() {
-  const txt = document.getElementById('textoMsg');
-  const contador = document.getElementById('contadorMsg');
-  const restante = 500 - (txt?.value?.length || 0);
-  contador.textContent = `${restante} caracteres restantes`;
-}
-
-let produtoAtual = null;
-
-function enviarMensagem() {
-  const nome = document.getElementById('nomeMsg').value.trim();
-  const texto = document.getElementById('textoMsg').value.trim();
-  if (!nome || !texto || !produtoAtual) {
-    alert('Preencha nome, mensagem e selecione um produto.');
-    return;
-  }
-
-  // Diminui a cota localmente
-  if (produtoAtual.cotas > 0) {
-    produtoAtual.cotas--;
-    renderizarPresentes();
-  }
-
-  // Envia mensagem para planilha
-  fetch("https://script.google.com/macros/s/AKfycbxF7l5PA4A0hjTSmudts708hj6ANfxFiOrNmNdgeuL7-fbei1O08zbSd6wRye5nl-XVDA/exec?tipo=mensagem", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      nome,
-      texto,
-      produto: produtoAtual.nome,
-      valor: produtoAtual.valor,
-      data: new Date().toLocaleString("pt-BR")
-    })
-  });
-
-  // Atualiza cotas na planilha
-  fetch("https://script.google.com/macros/s/AKfycbx81b8sTSaMut8ho6Xj_zt8iK8pkBUEg83EGNI-Aj_q69bTFPQydxy4Iz-kQ4jCD-V3oA/exec?tipo=presente", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ id: produtoAtual.ID ?? produtoAtual.id, nome: produtoAtual.nome, cotas: produtoAtual.cotas })
-  });
-
-  alert('Mensagem enviada com sucesso!');
-  fecharModal();
-}
+renderizarPresentes();
 </script>
 </body>
 </html>
