@@ -3,22 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chá do João Victor – V7</title>
+  <title>Chá do João Victor – Lista de Presentes</title>
   <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
   <style>
-    body{margin:0;padding:0;font-family:Arial,sans-serif;background:#b3d0b3;color:#5F805F}
-    header{background:#fff;text-align:center;padding:10px}
-    .lateral-esquerda,.lateral-direita{position:fixed;top:0;width:150px;height:100%;background:url('floresta_lateral.jpg') center/cover no-repeat;z-index:-1}
-    .lateral-esquerda{left:0}.lateral-direita{right:0}
-    .animal-strip{font-size:48px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
-    .container{max-width:900px;margin:auto;padding:20px;text-align:center}
-    .galeria{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;justify-content:center}
-    .item{width:220px;height:320px;border:1px solid #5F805F;border-radius:10px;padding:10px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;background:#fff}
-    .item .emoji{font-size:48px}
-    button{background:#5F805F;color:#fff;border:none;padding:10px;border-radius:5px;cursor:pointer;margin:5px}
+    body { margin: 0; padding: 0; font-family: Arial, sans-serif; background: #b3d0b3; color: #5F805F; }
+    header { background: #fff; text-align: center; padding: 10px; }
+    .lateral-esquerda, .lateral-direita {
+      position: fixed;
+      top: 0;
+      width: 150px;
+      height: 100%;
+      background: url('floresta_lateral.jpg') center/cover no-repeat;
+      z-index: -1;
+    }
+    .lateral-esquerda { left: 0; }
+    .lateral-direita { right: 0; }
+    .animal-strip { font-size: 48px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .container { max-width: 900px; margin: auto; padding: 20px; text-align: center; }
+    .galeria { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; justify-content: center; }
+    .item { width: 220px; height: 320px; border: 1px solid #5F805F; border-radius: 10px; padding: 10px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; background: #fff; }
+    .item .emoji { font-size: 48px; }
+    button { background: #5F805F; color: #fff; border: none; padding: 10px; border-radius: 5px; cursor: pointer; margin: 5px; }
     @media (max-width: 768px) {
       .galeria { grid-template-columns: repeat(2, 1fr); }
-      .item { width: 100%; height: auto; }
+      .item { width: 220px; height: 320px; border: 1px solid #5F805F; border-radius: 10px; padding: 10px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; background: #fff; }
       .modal-content { width: 95% !important; }
       .animal-strip { font-size: 32px !important; flex-wrap: wrap; }
       #titulo { font-size: 1.8em !important; }
@@ -39,128 +47,96 @@
   </div>
 <script>
 const nomesProdutos = [
-  "Cuequinha Antiestresse",
-  "Mamadeira Turbo 3000",
-  "Fralda com Bluetooth",
-  "Roupão Jedi Baby",
-  "Patinho GPS de Banho",
-  "Body Estampado de Dinossauro",
-  "Babador Wi-Fi",
-  "Naninha Falante",
-  "Termômetro Musical",
-  "Tapete de Dança Baby",
-  "Kit Higiene com Glitter",
-  "Travesseiro Antigravidade",
-  "Copo Anti-Vazamento Jedi",
-  "Almofada com Memória Afetiva",
-  "Livro Mágico de Banho",
-  "Canguru com Suspensório Ninja",
-  "Cadeirinha com Ejetor de Risadas",
-  "Organizador Intergaláctico",
-  "Fralda Recarregável",
-  "Berço com Porta USB",
-  "Cortador de Unha com Lanterna",
-  "Mochila com Porta Fralda Emergencial",
-  "Termômetro Inteligente",
-  "Tapete com Alarme de Soneca",
-  "Trocador com Wi-Fi",
-  "Cobertor Antiestresse",
-  "Touca com Isolamento Térmico",
-  "Meias de Super-Herói",
-  "Toalha que Abraça",
-  "Travesseiro Sonífero",
-  "Kit Talheres Gamer",
-  "Lençol Autolimpante",
-  "Pote Térmico com Bluetooth",
-  "Mordedor de Arco-Íris",
-  "Sabonete com Aroma de Ursinho",
-  "Kit Spa Bebê",
-  "Babá Eletrônica com IA",
-  "Cadeira Musical de Alimentação",
-  "Troninho com Feedback Sonoro",
-  "Kit Penteado Fashion Baby",
-  "Touca para Sonhos Doces",
-  "Almofada que Conta Histórias",
-  "Colchonete Inflável Mágico",
-  "Canguru com Suspensório Reversível",
-  "Macacão com GPS",
-  "Fralda Noturna com Luz de LED",
-  "Toalhas que Fazem Cócegas",
-  "Copo de Treinamento com Nível de Felicidade"
+  "Cuequinha Antiestresse", "Mamadeira Turbo 3000", "Fralda com Bluetooth", "Roupão Jedi Baby",
+  "Patinho GPS de Banho", "Body Estampado de Dinossauro", "Babador Wi-Fi", "Naninha Falante",
+  "Termômetro Musical", "Tapete de Dança Baby", "Kit Higiene com Glitter", "Travesseiro Antigravidade",
+  "Copo Anti-Vazamento Jedi", "Almofada com Memória Afetiva", "Livro Mágico de Banho", "Canguru com Suspensório Ninja",
+  "Cadeirinha com Ejetor de Risadas", "Organizador Intergaláctico", "Fralda Recarregável", "Berço com Porta USB",
+  "Cortador de Unha com Lanterna", "Mochila com Porta Fralda Emergencial", "Termômetro Inteligente", "Tapete com Alarme de Soneca",
+  "Trocador com Wi-Fi", "Cobertor Antiestresse", "Touca com Isolamento Térmico", "Meias de Super-Herói",
+  "Toalha que Abraça", "Travesseiro Sonífero", "Kit Talheres Gamer", "Lençol Autolimpante",
+  "Pote Térmico com Bluetooth", "Mordedor de Arco-Íris", "Sabonete com Aroma de Ursinho", "Kit Spa Bebê",
+  "Babá Eletrônica com IA", "Cadeira Musical de Alimentação", "Troninho com Feedback Sonoro", "Kit Penteado Fashion Baby",
+  "Touca para Sonhos Doces", "Almofada que Conta Histórias", "Colchonete Inflável Mágico", "Carregador de Bebê Humano",
+  "Macacão com GPS", "Fralda Noturna com Luz de LED", "Toalhas que Fazem Cócegas", "Copo de Pré-Treinamento infantil"
 ];
+
 let presentes = [];
-fetch('https://script.google.com/macros/s/AKfycbzYkqVKcTvZ5Me16JxObtRbffasEK2RJmLpBrv4EzE7yYDmXLd-6qTnzw2RZCYryLhj4g/exec')
-  .then(r => r.json())
+
+fetch("https://script.google.com/macros/s/AKfycbxF7l5PA4A0hjTSmudts708hj6ANfxFiOrNmNdgeuL7-fbei1O08zbSd6wRye5nl-XVDA/exec")
+  .then(res => res.json())
   .then(data => {
     presentes = data;
     renderizarPresentes();
   });
+
 function emoji(nome) {
   const mapa = {
-    cuequinha: '🩲', toalha: '🧻', camiseta: '👕', macacão: '🧥', pato: '🦆',
-    babador: '🍼', mamadeira: '🍼', termômetro: '🌡️', sabonete: '🧼', tapete: '🧸',
-    livro: '📘', kit: '🎁', travesseiro: '🛏️', copo: '🥤', brinquedo: '🪀',
-    almofada: '🛋️', porta: '🧺', luva: '🧤', escova: '🪥', canguru: '🐨',
-    cadeirinha: '🪑', naninha: '🧸', roupão: '👘', bomba: '🍼', berço: '🛏️',
-    babá: '📹', cadeira: '🪑', troninho: '🚽', organizador: '🗂️', mochila: '🎒',
-    pote: '🥣', talheres: '🍴', lençol: '🛌', colchonete: '🛌', trocador: '🔄',
-    cortador: '✂️', dental: '🦷', touca: '🎩', meias: '🧦'
+    cuequinha: '🩲', mamadeira: '🍼', fralda: '🧷', roupão: '🛁', patinho: '🦆',
+    body: '👕', babador: '🧣', naninha: '🧸', termômetro: '🌡️', tapete: '🧸',
+    higiene: '🧼', travesseiro: '🛌', copo: '🥤', almofada: '🛋️', livro: '📖',
+    canguru: '🦘', cadeirinha: '🪑', organizador: '🗃️', berço: '🛏️',
+    cortador: '✂️', mochila: '🎒', trocador: '🔄', cobertor: '🛌',
+    touca: '🧢', meias: '🧦', toalha: '🧻', talheres: '🍴', lençol: '🛏️',
+    pote: '🥣', mordedor: '🦷', sabonete: '🧼', spa: '💆', babá: '🎥',
+    cadeira: '🪑', troninho: '🚽', penteado: '💇', colchonete: '🛏️',
+    carregador: '🎒', macacão: '🧥', led: '💡', felicidade: '😊'
   };
   const chave = Object.keys(mapa).find(k => nome.toLowerCase().includes(k));
-  return chave ? mapa[chave] : '🎁';
+  return mapa[chave] || '🎁';
 }
 function renderizarPresentes() {
-  presentes.sort((a, b) => parseFloat(a.valor) - parseFloat(b.valor));
-  const gal = document.getElementById('presentes');
-  gal.innerHTML = '';
+  const galeria = document.getElementById('presentes');
+  galeria.innerHTML = '';
   presentes.forEach((p, i) => {
-    const esgotado = p.cotas === 0;
+    const nomeFinal = nomesProdutos[p.id] || p.nome;
+    const esgotado = p.cotas <= 0;
     const div = document.createElement('div');
     div.className = 'item';
     div.innerHTML = `
-      <div class='emoji'>${emoji(nomesProdutos[p.id] || p.nome)}</div>
-      <h3 style='color:${esgotado ? "gray" : "inherit"}'>${nomesProdutos[p.id] || p.nome}</h3>
-      <p style='color:${esgotado ? "gray" : "black"};font-weight:bold'>Valor: R$ ${p.valor}</p>
+      <div class="emoji">${emoji(nomeFinal)}</div>
+      <h3 style="color:${esgotado ? 'gray' : 'inherit'}">${nomeFinal}</h3>
+      <p style="color:${esgotado ? 'gray' : 'black'}; font-weight:bold">Valor: R$ ${p.valor}</p>
       ${!esgotado ? `<p>Cotas disponíveis: ${p.cotas}</p>` : ''}
-      <button onclick='if (!${esgotado}) presentear(${i})' style='background:${esgotado ? "gray" : "#5F805F"};cursor:${esgotado ? "not-allowed" : "pointer"}'>${esgotado ? "ESGOTADO" : "PRESENTEAR"}</button>`;
-    gal.appendChild(div);
+      <button onclick="presentear(${i})" style="background:${esgotado ? 'gray' : '#5F805F'}; cursor:${esgotado ? 'not-allowed' : 'pointer'}">${esgotado ? 'ESGOTADO' : 'PRESENTEAR'}</button>
+    `;
+    galeria.appendChild(div);
   });
 }
-</script>
-<div id="modalPagamento" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:1000;">
-  <div class="modal-content" style="background:white; padding:30px; border-radius:10px; max-width:500px; width:90%; text-align:center; position:relative;">
-    <button onclick="fecharModal()" style="position:absolute; top:10px; right:10px; background:none; border:none; font-size:20px; cursor:pointer">❌</button>
-    <div id="modalEmoji" style="font-size:64px;"></div>
-    <h2 id="modalNome"></h2>
-    <p style="font-size:1.2em;color:black;font-weight:bold">Valor: R$ <span id="modalValor"></span></p>
-    <p style="font-size:1.1em;color:black">Chave Pix: <strong>065.755.339-57</strong> <button onclick="copiarPix(this)">Copiar</button></p>
-    <p style="margin-top:10px;color:#4CAF50;font-weight:bold">Papai, mamãe e João agradecem de coração pelo presente! ❤️</p>
-    <hr style="margin:20px 0">
-    <h2>Mensagem para o João</h2>
-    <label>Seu nome:</label><br>
-    <input type="text" id="nomeMsg" maxlength="50" style="width:90%;margin:5px"><br>
-    <label>Deixe sua mensagem:</label><br>
-    <textarea id="textoMsg" maxlength="500" oninput="atualizarContador()" style="width:90%;height:100px;margin:5px"></textarea><br>
-    <div id="contadorMsg">500 caracteres restantes</div>
-    <button onclick="enviarMensagem()">Enviar Mensagem</button>
-  </div>
-</div>
-
-<script>
-function abrirModalPagamento(p) {
+function presentear(index) {
+  const p = presentes[index];
+  if (!p || p.cotas <= 0) return;
   const nomeFinal = nomesProdutos[p.id] || p.nome;
-document.getElementById('modalEmoji').textContent = emoji(nomeFinal);
-  document.getElementById('modalNome').textContent = nomeFinal;
-  document.getElementById('modalValor').textContent = p.valor;
-  document.getElementById('modalPagamento').style.display = 'flex';
-  document.getElementById('nomeMsg').value = '';
-  document.getElementById('textoMsg').value = '';
+  const modal = document.createElement('div');
+  modal.className = 'modal show';
+  modal.style = 'position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; justify-content:center; align-items:center; z-index:1000;';
+  modal.innerHTML = `
+    <div class='modal-content' style='background:#fff; padding:30px; border-radius:10px; max-width:500px; width:90%; text-align:center; position:relative;'>
+      <button onclick='fecharModal()' style='position:absolute;top:10px;right:10px;'>❌</button>
+      <div style='font-size:64px;'>${emoji(nomeFinal)}</div>
+      <h2>${nomeFinal}</h2>
+      <p style='font-size:1.2em;color:black;font-weight:bold'>Valor: R$ ${p.valor}</p>
+      <p style='font-size:1.1em;color:black'>Chave Pix: <strong>065.755.339-57</strong> <button onclick='copiarPix(this)'>Copiar</button></p>
+      <p style='margin-top:10px;color:#4CAF50;font-weight:bold'>Papai, mamãe e João agradecem de coração pelo presente! ❤️</p>
+      <hr style='margin:20px 0'>
+      <h2>Mensagem para o João</h2>
+      <label>Seu nome:</label><br>
+      <input type='text' id='nomeMsg' maxlength='50' style='width:90%;margin:5px'><br>
+      <label>Deixe sua mensagem:</label><br>
+      <textarea id='textoMsg' maxlength='500' oninput='atualizarContador()' style='width:90%;height:100px;margin:5px'></textarea><br>
+      <div id='contadorMsg'>500 caracteres restantes</div>
+      <button onclick='enviarMensagem()'>Enviar Mensagem</button>
+    </div>`;
+  document.body.appendChild(modal);
+  produtoAtual = p;
   atualizarContador();
   produtoAtual = p;
+  atualizarContador();
+  document.body.appendChild(modal);
 }
 
 function fecharModal() {
-  document.getElementById('modalPagamento').style.display = 'none';
+  document.querySelectorAll('.modal').forEach(m => m.remove());
 }
 
 function copiarPix(btn) {
@@ -172,11 +148,12 @@ function copiarPix(btn) {
 function atualizarContador() {
   const txt = document.getElementById('textoMsg');
   const contador = document.getElementById('contadorMsg');
-  const restante = 500 - txt.value.length;
+  const restante = 500 - (txt?.value?.length || 0);
   contador.textContent = `${restante} caracteres restantes`;
 }
 
 let produtoAtual = null;
+
 function enviarMensagem() {
   const nome = document.getElementById('nomeMsg').value.trim();
   const texto = document.getElementById('textoMsg').value.trim();
@@ -184,33 +161,36 @@ function enviarMensagem() {
     alert('Preencha nome, mensagem e selecione um produto.');
     return;
   }
-  fetch('https://script.google.com/macros/s/AKfycbzYkqVKcTvZ5Me16JxObtRbffasEK2RJmLpBrv4EzE7yYDmXLd-6qTnzw2RZCYryLhj4g/exec?tipo=mensagem', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ nome, produto: nomesProdutos[produtoAtual.id] || produtoAtual.nome, valor: produtoAtual.valor, texto })
-  });
+
+  // Diminui a cota localmente
   if (produtoAtual.cotas > 0) {
     produtoAtual.cotas--;
-    fetch('https://script.google.com/macros/s/AKfycbzYkqVKcTvZ5Me16JxObtRbffasEK2RJmLpBrv4EzE7yYDmXLd-6qTnzw2RZCYryLhj4g/exec?tipo=presente', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nome: produtoAtual.nome, cotas: produtoAtual.cotas })
-    });
+    renderizarPresentes();
   }
+
+  // Envia mensagem para planilha
+  fetch("https://script.google.com/macros/s/AKfycbxF7l5PA4A0hjTSmudts708hj6ANfxFiOrNmNdgeuL7-fbei1O08zbSd6wRye5nl-XVDA/exec?tipo=mensagem", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      nome,
+      texto,
+      produto: produtoAtual.nome,
+      valor: produtoAtual.valor,
+      data: new Date().toLocaleString("pt-BR")
+    })
+  });
+
+  // Atualiza cotas na planilha
+  fetch("https://script.google.com/macros/s/AKfycbx81b8sTSaMut8ho6Xj_zt8iK8pkBUEg83EGNI-Aj_q69bTFPQydxy4Iz-kQ4jCD-V3oA/exec?tipo=presente", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id: produtoAtual.ID ?? produtoAtual.id, nome: produtoAtual.nome, cotas: produtoAtual.cotas })
+  });
+
   alert('Mensagem enviada com sucesso!');
   fecharModal();
-  renderizarPresentes();
 }
-
-function presentear(index) {
-  const p = presentes[index];
-  if (!p || p.cotas === 0) return;
-  abrirModalPagamento(p);
-}
-
-document.addEventListener('keydown', function(event) {
-  if (event.key === 'Escape') {
-    fecharModal();
-  }
-});
 </script>
+</body>
+</html>
