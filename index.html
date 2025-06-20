@@ -10,168 +10,153 @@
     header{background:#fff;text-align:center;padding:10px}
     .lateral-esquerda,.lateral-direita{position:fixed;top:0;width:150px;height:100%;background:url('floresta_lateral.jpg') center/cover no-repeat;z-index:-1}
     .lateral-esquerda{left:0}.lateral-direita{right:0}
-    font-size:3.5em;text-transform:uppercase;margin:0}
     .animal-strip{font-size:48px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
-    
     .container{max-width:900px;margin:auto;padding:20px;text-align:center}
     .galeria{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;justify-content:center}
     .item{width:220px;height:320px;border:1px solid #5F805F;border-radius:10px;padding:10px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;background:#fff}
     .item .emoji{font-size:48px}
     button{background:#5F805F;color:#fff;border:none;padding:10px;border-radius:5px;cursor:pointer;margin:5px}
-      @media (max-width: 768px) {
-      .galeria {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .item {
-        width: 100%;
-        height: auto;
-      }
-      .modal-content {
-        width: 95% !important;
-      }
-      .animal-strip {
-        font-size: 32px !important;
-        flex-wrap: wrap;
-      }
-      #titulo {
-        font-size: 1.8em !important;
-      }
+    @media (max-width: 768px) {
+      .galeria { grid-template-columns: repeat(2, 1fr); }
+      .item { width: 100%; height: auto; }
+      .modal-content { width: 95% !important; }
+      .animal-strip { font-size: 32px !important; flex-wrap: wrap; }
+      #titulo { font-size: 1.8em !important; }
     }
   </style>
 </head>
 <body>
   <div class="lateral-esquerda"></div>
   <div class="lateral-direita"></div>
-
   <header>
-    <div class="animal-strip" style="font-size:48px">🐵🦊🦉🦒🦝 🦁 🐯🐘🐸🐢🦜</div>
+    <div class="animal-strip">🐵🦊🦉🦒🦝 🦁 🐯🐘🐸🐢🦜</div>
     <h1 id="titulo" style="text-transform:uppercase; font-family:'Chewy', cursive; font-size:2.5em;">CHÁ DO JOÃO VICTOR</h1>
   </header>
-
   <div class="container">
     <h2 style="margin-top:20px; text-transform:uppercase;">Lista de Presentes</h2>
     <p>Se preferir contribuir com o nosso chá, escolha um presente para o João!</p>
     <div id="presentes" class="galeria"></div>
   </div>
-
-  <script>
-    const nomesProdutos = [
-      "Cuequinha Antiestresse","Toalha Invisível de Choro","Camiseta com GPS para Fralda","Macacão de Emergência Rápida",
-      "Pato Inflável Antigravidade","Babador Reversível Intergaláctico","Mamadeira Turbo 3000","Termômetro que Canta",
-      "Sabonete de Nuvem","Toalha com Capuz de Dragão","Tapete Interativo Telepático","Livro de Banho à Prova de Tédio",
-      "Kit Higiene do Super Bebê","Travesseiro com Mimos","Copo Antivazamento Ninja","Brinquedo que Não Cansa os Pais",
-      "Almofada com Sensor de Abraço","Porta Fraldas com Wifi","Kit Babadores Hipsters","Luva que Conta Histórias",
-      "Toalha Fralda com Poderes","Macacão Antiatrito Cósmico","Escova que Ri","Canguru com Suspensão","Cadeirinha Antivoo",
-      "Naninha Sensorial do Futuro","Kit Mamadeiras Espaciais","Roupão do Jedi Bebê","Sabonete com Aroma de Soneca",
-      "Bomba Tira Leite Espacial","Berço Portátil Dobrável em Origami","Babá Eletrônica com Filtro de Choro",
-      "Cadeira Balanço Hipnótica","Tapete com Modo Zen","Troninho com GPS","Copo com Tampa Inacreditável",
-      "Organizador que Organiza Sozinho","Mochila Maternidade Interplanetária","Pote Térmico Antipipoca",
-      "Conjunto Talheres Jedi","Lençol que Troca Sozinho","Colchonete Portátil de Nuvem","Trocador que Toca Música",
-      "Cortador de Unha Laser","Termômetro de Banho que Boia","Kit Escova Dental do Unicórnio",
-      "Touca Invisível Antisusto","Conjunto de Meias que Nunca Somem"
-    ];
-
-    const presentes = nomesProdutos.map(nome => {
-      const reais = Math.floor(Math.random() * (102 - 52 + 1)) + 52;
-      const centavos = [0, 25, 50, 75][Math.floor(Math.random() * 4)];
-      const valor = (reais + centavos / 100).toFixed(2);
-      const cotas = Math.floor(Math.random() * 11) + 10;
-      return { nome, valor, cotas };
-    });
-
-    function emoji(nome) {
-      const mapa = {
-        cuequinha: '🩲', toalha: '🧻', camiseta: '👕', macacão: '🧥', pato: '🦆',
-        babador: '🍼', mamadeira: '🍼', termômetro: '🌡️', sabonete: '🧼', tapete: '🧸',
-        livro: '📘', kit: '🎁', travesseiro: '🛏️', copo: '🥤', brinquedo: '🪀',
-        almofada: '🛋️', porta: '🧺', luva: '🧤', escova: '🪥', canguru: '🐨',
-        cadeirinha: '🪑', naninha: '🧸', roupão: '👘', bomba: '🍼', berço: '🛏️',
-        babá: '📹', cadeira: '🪑', troninho: '🚽', organizador: '🗂️', mochila: '🎒',
-        pote: '🥣', talheres: '🍴', lençol: '🛌', colchonete: '🛌', trocador: '🔄',
-        cortador: '✂️', dental: '🦷', touca: '🎩', meias: '🧦'
-      };
-      const chave = Object.keys(mapa).find(k => nome.toLowerCase().includes(k));
-      return chave ? mapa[chave] : '🎁';
-    }
-
-    function renderizarPresentes() {
-      presentes.sort((a, b) => parseFloat(a.valor) - parseFloat(b.valor));
-      const gal = document.getElementById('presentes');
-      gal.innerHTML = '';
-      presentes.forEach((p, i) => {
-        const esgotado = p.cotas === 0;
-        const div = document.createElement('div');
-        div.className = 'item';
-        div.innerHTML = `
-          <div class='emoji'>${emoji(p.nome)}</div>
-          <h3 style='color:${esgotado ? "gray" : "inherit"}'>${p.nome}</h3>
-          <p style='color:${esgotado ? "gray" : "black"};font-weight:bold'>Valor: R$ ${p.valor}</p>
-          ${!esgotado ? `<p>Cotas disponíveis: ${p.cotas}</p>` : ''}
-          <button onclick='if (!${esgotado}) presentear(${i})' style='background:${esgotado ? "gray" : "#5F805F"};cursor:${esgotado ? "not-allowed" : "pointer"}'>${esgotado ? "ESGOTADO" : "PRESENTEAR"}</button>
-        `;
-        gal.appendChild(div);
-      });
-    }
-
-    document.addEventListener('DOMContentLoaded', renderizarPresentes);
-  function presentear(index) {
-  const p = presentes[index];
-  if (!p || p.cotas === 0) return;
-  p.cotas--;
-  abrirModalPagamento(p);
-  renderizarPresentes();
-  const nomeInput = document.getElementById('nomeMsg');
-  const textoInput = document.getElementById('textoMsg');
-  if (nomeInput) nomeInput.value = '';
-  if (textoInput) textoInput.value = '';
-  atualizarContador();}
-function atualizarContador() {
-  const txt = document.getElementById('textoMsg');
-  const contador = document.getElementById('contadorMsg');
-  const restante = 500 - txt.value.length;
-  contador.textContent = `${restante} caracteres restantes`;
+<script>
+const nomesProdutos = [
+  "Cuequinha Antiestresse",
+  "Mamadeira Turbo 3000",
+  "Fralda com Bluetooth",
+  "Roupão Jedi Baby",
+  "Patinho GPS de Banho",
+  "Body Estampado de Dinossauro",
+  "Babador Wi-Fi",
+  "Naninha Falante",
+  "Termômetro Musical",
+  "Tapete de Dança Baby",
+  "Kit Higiene com Glitter",
+  "Travesseiro Antigravidade",
+  "Copo Anti-Vazamento Jedi",
+  "Almofada com Memória Afetiva",
+  "Livro Mágico de Banho",
+  "Canguru com Suspensório Ninja",
+  "Cadeirinha com Ejetor de Risadas",
+  "Organizador Intergaláctico",
+  "Fralda Recarregável",
+  "Berço com Porta USB",
+  "Cortador de Unha com Lanterna",
+  "Mochila com Porta Fralda Emergencial",
+  "Termômetro Inteligente",
+  "Tapete com Alarme de Soneca",
+  "Trocador com Wi-Fi",
+  "Cobertor Antiestresse",
+  "Touca com Isolamento Térmico",
+  "Meias de Super-Herói",
+  "Toalha que Abraça",
+  "Travesseiro Sonífero",
+  "Kit Talheres Gamer",
+  "Lençol Autolimpante",
+  "Pote Térmico com Bluetooth",
+  "Mordedor de Arco-Íris",
+  "Sabonete com Aroma de Ursinho",
+  "Kit Spa Bebê",
+  "Babá Eletrônica com IA",
+  "Cadeira Musical de Alimentação",
+  "Troninho com Feedback Sonoro",
+  "Kit Penteado Fashion Baby",
+  "Touca para Sonhos Doces",
+  "Almofada que Conta Histórias",
+  "Colchonete Inflável Mágico",
+  "Canguru com Suspensório Reversível",
+  "Macacão com GPS",
+  "Fralda Noturna com Luz de LED",
+  "Toalhas que Fazem Cócegas",
+  "Copo de Treinamento com Nível de Felicidade"
+];
+let presentes = [];
+fetch('https://script.google.com/macros/s/AKfycbzYkqVKcTvZ5Me16JxObtRbffasEK2RJmLpBrv4EzE7yYDmXLd-6qTnzw2RZCYryLhj4g/exec')
+  .then(r => r.json())
+  .then(data => {
+    presentes = data;
+    renderizarPresentes();
+  });
+function emoji(nome) {
+  const mapa = {
+    cuequinha: '🩲', toalha: '🧻', camiseta: '👕', macacão: '🧥', pato: '🦆',
+    babador: '🍼', mamadeira: '🍼', termômetro: '🌡️', sabonete: '🧼', tapete: '🧸',
+    livro: '📘', kit: '🎁', travesseiro: '🛏️', copo: '🥤', brinquedo: '🪀',
+    almofada: '🛋️', porta: '🧺', luva: '🧤', escova: '🪥', canguru: '🐨',
+    cadeirinha: '🪑', naninha: '🧸', roupão: '👘', bomba: '🍼', berço: '🛏️',
+    babá: '📹', cadeira: '🪑', troninho: '🚽', organizador: '🗂️', mochila: '🎒',
+    pote: '🥣', talheres: '🍴', lençol: '🛌', colchonete: '🛌', trocador: '🔄',
+    cortador: '✂️', dental: '🦷', touca: '🎩', meias: '🧦'
+  };
+  const chave = Object.keys(mapa).find(k => nome.toLowerCase().includes(k));
+  return chave ? mapa[chave] : '🎁';
 }
-
-function enviarMensagem() {
-  const nome = document.getElementById('nomeMsg').value.trim();
-  const texto = document.getElementById('textoMsg').value.trim();
-  if (!nome || !texto) {
-    alert('Preencha nome e mensagem.');
-    return;
-  }
-  alert('Mensagem enviada com sucesso!');
-  document.getElementById('nomeMsg').value = '';
-  document.getElementById('textoMsg').value = '';
-  atualizarContador();
-  fecharModal();
+function renderizarPresentes() {
+  presentes.sort((a, b) => parseFloat(a.valor) - parseFloat(b.valor));
+  const gal = document.getElementById('presentes');
+  gal.innerHTML = '';
+  presentes.forEach((p, i) => {
+    const esgotado = p.cotas === 0;
+    const div = document.createElement('div');
+    div.className = 'item';
+    div.innerHTML = `
+      <div class='emoji'>${emoji(nomesProdutos[p.id] || p.nome)}</div>
+      <h3 style='color:${esgotado ? "gray" : "inherit"}'>${nomesProdutos[p.id] || p.nome}</h3>
+      <p style='color:${esgotado ? "gray" : "black"};font-weight:bold'>Valor: R$ ${p.valor}</p>
+      ${!esgotado ? `<p>Cotas disponíveis: ${p.cotas}</p>` : ''}
+      <button onclick='if (!${esgotado}) presentear(${i})' style='background:${esgotado ? "gray" : "#5F805F"};cursor:${esgotado ? "not-allowed" : "pointer"}'>${esgotado ? "ESGOTADO" : "PRESENTEAR"}</button>`;
+    gal.appendChild(div);
+  });
 }
 </script>
 <div id="modalPagamento" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:1000;">
   <div class="modal-content" style="background:white; padding:30px; border-radius:10px; max-width:500px; width:90%; text-align:center; position:relative;">
-    <button class="modal-close" onclick="fecharModal()" style="position:absolute; top:10px; right:10px; background:none; border:none; font-size:20px; cursor:pointer">❌</button>
+    <button onclick="fecharModal()" style="position:absolute; top:10px; right:10px; background:none; border:none; font-size:20px; cursor:pointer">❌</button>
     <div id="modalEmoji" style="font-size:64px;"></div>
     <h2 id="modalNome"></h2>
     <p style="font-size:1.2em;color:black;font-weight:bold">Valor: R$ <span id="modalValor"></span></p>
     <p style="font-size:1.1em;color:black">Chave Pix: <strong>065.755.339-57</strong> <button onclick="copiarPix(this)">Copiar</button></p>
-<p style="margin-top:10px;color:#4CAF50;font-weight:bold">Papai, mamãe e João agradecem de coração pelo presente! ❤️</p>
-<hr style="margin:20px 0">
-<h2>Mensagem para o João</h2>
-<label>Seu nome:</label><br>
-<input type="text" id="nomeMsg" maxlength="50" style="width:90%;margin:5px"><br>
-<label>Deixe sua mensagem:</label><br>
-<textarea id="textoMsg" maxlength="500" oninput="atualizarContador()" style="width:90%;height:100px;margin:5px"></textarea><br>
-<div id="contadorMsg">500 caracteres restantes</div>
-<button onclick="enviarMensagem()">Enviar Mensagem</button>
+    <p style="margin-top:10px;color:#4CAF50;font-weight:bold">Papai, mamãe e João agradecem de coração pelo presente! ❤️</p>
+    <hr style="margin:20px 0">
+    <h2>Mensagem para o João</h2>
+    <label>Seu nome:</label><br>
+    <input type="text" id="nomeMsg" maxlength="50" style="width:90%;margin:5px"><br>
+    <label>Deixe sua mensagem:</label><br>
+    <textarea id="textoMsg" maxlength="500" oninput="atualizarContador()" style="width:90%;height:100px;margin:5px"></textarea><br>
+    <div id="contadorMsg">500 caracteres restantes</div>
+    <button onclick="enviarMensagem()">Enviar Mensagem</button>
   </div>
 </div>
 
 <script>
-function abrirModalPagamento(produto) {
-  const modal = document.getElementById('modalPagamento');
-  document.getElementById('modalEmoji').textContent = emoji(produto.nome);
-  document.getElementById('modalNome').textContent = produto.nome;
-  document.getElementById('modalValor').textContent = produto.valor;
-  modal.style.display = 'flex';
+function abrirModalPagamento(p) {
+  const nomeFinal = nomesProdutos[p.id] || p.nome;
+document.getElementById('modalEmoji').textContent = emoji(nomeFinal);
+  document.getElementById('modalNome').textContent = nomeFinal;
+  document.getElementById('modalValor').textContent = p.valor;
+  document.getElementById('modalPagamento').style.display = 'flex';
+  document.getElementById('nomeMsg').value = '';
+  document.getElementById('textoMsg').value = '';
+  atualizarContador();
+  produtoAtual = p;
 }
 
 function fecharModal() {
@@ -183,120 +168,49 @@ function copiarPix(btn) {
   btn.textContent = 'Copiado!';
   setTimeout(() => btn.textContent = 'Copiar', 2000);
 }
-</script>
-<div style="text-align:center; padding:20px; font-size:1.2em; color:#5F805F; cursor:pointer;" onclick="abrirModalSenha()">Obrigado pelo Presente</div>
 
-<div id="senhaModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:1000;">
-  <div class="modal-content" style="background:white; padding:30px; border-radius:10px; max-width:400px; width:90%; text-align:center; position:relative;">
-    <h2>Acesso Restrito</h2>
-    <input type="password" id="senhaInput" placeholder="Digite a senha" style="padding:8px; width:80%; max-width:300px; margin:10px 0; border-radius:5px; border:1px solid #ccc"><br>
-    <div style="display: flex; justify-content: center; gap: 10px; margin-top: 10px;">
-  <button onclick="validarSenha()" style="background:#5F805F; color:#fff; padding:10px 20px; border:none; border-radius:5px; font-weight:bold; cursor:pointer">Acessar</button>
-  <button onclick="fecharSenhaModal()" style="background:#5F805F; color:#fff; padding:10px 20px; border:none; border-radius:5px; font-weight:bold; cursor:pointer">Fechar</button>
-</div>
-  </div>
-</div>
-
-<script>
-function abrirModalSenha() {
-  const modal = document.getElementById('senhaModal');
-  if (modal) modal.style.display = 'flex';
+function atualizarContador() {
+  const txt = document.getElementById('textoMsg');
+  const contador = document.getElementById('contadorMsg');
+  const restante = 500 - txt.value.length;
+  contador.textContent = `${restante} caracteres restantes`;
 }
 
-function fecharSenhaModal() {
-  const modal = document.getElementById('senhaModal');
-  if (modal) modal.style.display = 'none';
-}
-
-function validarSenha() {
-  const senha = document.getElementById('senhaInput').value;
-  if (senha === '08072010') {
-    alert('Acesso concedido! Em breve essa tela mostrará as mensagens.');
-    fecharModal();
-  } else {
-    alert('Senha incorreta.');
-  }
-}
-</script>
-<div id="mensagensModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:1000;">
-  <div class="modal-content" style="background:white; padding:30px; border-radius:10px; max-width:600px; width:90%; text-align:left; position:relative; max-height:80vh; overflow-y:auto;">
-    <button class="modal-close" onclick="fecharMensagens()" style="position:absolute; top:10px; right:10px; background:#ccc; border:none; font-size:20px; border-radius:5px; padding:4px 8px; cursor:pointer">❌</button>
-    <h2 style="text-align:center">Mensagens Recebidas</h2>
-    <div id="listaMensagens"></div>
-  </div>
-</div>
-<script>
-const mensagensRecebidas = [];
-
+let produtoAtual = null;
 function enviarMensagem() {
   const nome = document.getElementById('nomeMsg').value.trim();
   const texto = document.getElementById('textoMsg').value.trim();
-  const produto = document.getElementById('modalNome').textContent.trim();
-  const valor = document.getElementById('modalValor').textContent.trim();
-  const agora = new Date().toLocaleString('pt-BR');
-
-  if (!nome || !texto) {
-    alert('Preencha nome e mensagem.');
+  if (!nome || !texto || !produtoAtual) {
+    alert('Preencha nome, mensagem e selecione um produto.');
     return;
   }
-
-  mensagensRecebidas.push({ nome, produto, valor, texto, data: agora });
-  alert('Mensagem enviada com sucesso!');
-  fecharModal();
-}
-
-function validarSenha() {
-  const senha = document.getElementById('senhaInput').value;
-  if (senha === '08072010') {
-    fecharModal();
-    exibirMensagens();
-  } else {
-    alert('Senha incorreta.');
-  }
-}
-
-function exibirMensagens() {
-  const modal = document.getElementById('mensagensModal');
-  const container = document.getElementById('listaMensagens');
-  if (!modal || !container) return;
-  container.innerHTML = '';
-
-  if (mensagensRecebidas.length === 0) {
-    container.innerHTML = '<p style="text-align:center">Nenhuma mensagem recebida ainda.</p>';
-  } else {
-    mensagensRecebidas.sort((a, b) => new Date(b.data.split('/').reverse().join('-')) - new Date(a.data.split('/').reverse().join('-')));
-    mensagensRecebidas.forEach(m => {
-      const div = document.createElement('div');
-      div.style.borderBottom = '1px solid #ccc';
-      div.style.marginBottom = '10px';
-      div.style.paddingBottom = '10px';
-      div.innerHTML = `
-        <strong>Nome:</strong> ${m.nome}<br>
-        <strong>Presente:</strong> ${m.produto}<br>
-        <strong>Valor:</strong> R$ ${m.valor}<br>
-        <strong>Mensagem:</strong> ${m.texto}<br>
-        <strong>Data/Hora:</strong> ${m.data}<br>
-      `;
-      container.appendChild(div);
+  fetch('https://script.google.com/macros/s/AKfycbzYkqVKcTvZ5Me16JxObtRbffasEK2RJmLpBrv4EzE7yYDmXLd-6qTnzw2RZCYryLhj4g/exec?tipo=mensagem', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ nome, produto: nomesProdutos[produtoAtual.id] || produtoAtual.nome, valor: produtoAtual.valor, texto })
+  });
+  if (produtoAtual.cotas > 0) {
+    produtoAtual.cotas--;
+    fetch('https://script.google.com/macros/s/AKfycbzYkqVKcTvZ5Me16JxObtRbffasEK2RJmLpBrv4EzE7yYDmXLd-6qTnzw2RZCYryLhj4g/exec?tipo=presente', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nome: produtoAtual.nome, cotas: produtoAtual.cotas })
     });
   }
-
-  modal.style.display = 'flex';
+  alert('Mensagem enviada com sucesso!');
+  fecharModal();
+  renderizarPresentes();
 }
 
-function fecharMensagens() {
-  document.getElementById('mensagensModal').style.display = 'none';
+function presentear(index) {
+  const p = presentes[index];
+  if (!p || p.cotas === 0) return;
+  abrirModalPagamento(p);
 }
+
 document.addEventListener('keydown', function(event) {
   if (event.key === 'Escape') {
-    const modalPagamento = document.getElementById('modalPagamento');
-    const senhaModal = document.getElementById('senhaModal');
-    const mensagensModal = document.getElementById('mensagensModal');
-    if (modalPagamento && modalPagamento.style.display === 'flex') fecharModal();
-    if (senhaModal && senhaModal.style.display === 'flex') fecharSenhaModal();
-    if (mensagensModal && mensagensModal.style.display === 'flex') fecharMensagens();
+    fecharModal();
   }
 });
 </script>
-</body>
-</html>
