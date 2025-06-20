@@ -108,7 +108,7 @@ function renderizarPresentes() {
     item.innerHTML = `
       <div class="emoji">${produto.emoji}</div>
       <h3>${produto.nome}</h3>
-      <p><strong>Valor:</strong> R$ ${produto.valor.toFixed(2)}</p>
+      <p><strong>Valor:</strong> R$ ${produto.valor.toFixed(2).replace('.', ',')}</p>
       ${produto.cotas > 0 ? `<p><strong>Cotas disponíveis:</strong> ${produto.cotas}</p>
       <button onclick="presentear(${produto.id})">PRESENTEAR</button>` : `<p style='color:gray'><strong>ESGOTADO</strong></p>
       <button disabled style='background:gray;cursor:not-allowed'>ESGOTADO</button>`}`;
@@ -132,13 +132,14 @@ function presentear(id) {
   modal.style.alignItems = 'center';
   modal.innerHTML = `
     <div class='modal-content' style='background:#fff;padding:30px;border-radius:10px;box-shadow:0 0 15px rgba(0,0,0,.3);max-width:500px;width:90%;text-align:center;position:relative'>
-      <button onclick="document.body.removeChild(this.closest('.modal'))" style="position:absolute;top:10px;right:10px;background:none;border:none;font-size:20px;cursor:pointer">❌</button>
+      
       <div style='font-size:64px;'>${produto.emoji}</div>
       <h2>${produto.nome}</h2>
-      <p style='font-size:1.2em;color:black;font-weight:bold'>Valor: R$ ${produto.valor.toFixed(2)}</p>
-      <p style='font-size:1.1em;color:black'>Chave Pix: <strong>065.755.339-57</strong><br><img src='/QrCode.jpeg' alt='QR Code Pix' style='margin-top:10px;width:150px;height:150px;display:block;margin-left:auto;margin-right:auto;'></p>
+      <p style='font-size:1.2em;color:black;font-weight:bold'>Valor: R$ ${produto.valor.toFixed(2).replace('.', ',')}</p>
+      <p style='font-size:1.1em;color:black'>Chave Pix: <strong>065.755.339-57</strong> <button onclick="navigator.clipboard.writeText('06575533957');this.textContent='Copiado!';setTimeout(()=>this.textContent='Copiar',2000);">Copiar</button><br><img src='/QrCode.jpeg' alt='QR Code Pix' style='margin-top:10px;width:150px;height:150px;display:block;margin-left:auto;margin-right:auto;'></p>
       <p>Papai, mamãe e João agradecem o presente!</p>
-      <button onclick="confirmarPresente(${produto.id})" style='margin-top:10px;background:#5F805F;color:#fff;padding:10px 20px;border:none;border-radius:5px;font-weight:bold;cursor:pointer'>Presente Enviado</button>
+      <div style='font-size: 1em; text-align: center;'>❤️</div>
+      <button onclick="confirmarPresente(${produto.id})" style='margin-top:10px;background:#5F805F;color:#fff;padding:10px 20px;border:none;border-radius:5px;font-weight:bold;cursor:pointer'>Finalizar</button>
     </div>
   `;
   document.body.appendChild(modal);
