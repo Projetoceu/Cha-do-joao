@@ -3,200 +3,154 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chá do João Victor – Lista de Presentes</title>
-  <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
+  <title>Chá do João Victor</title>
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background: #b3d0b3;
-      color: #5F805F;
-    }
-    header {
-      background: #fff;
-      text-align: center;
-      padding: 10px;
-    }
-    .animal-strip {
-      font-size: 48px;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 20px;
-      text-align: center;
-    }
-    .galeria {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-    }
-    .item {
-      border: 1px solid #5F805F;
-      border-radius: 10px;
-      padding: 10px;
-      background: #fff;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .item .emoji {
-      font-size: 48px;
-    }
-    button {
-      background: #5F805F;
-      color: #fff;
-      border: none;
-      padding: 10px;
-      border-radius: 5px;
-      cursor: pointer;
-      margin: 5px;
-    }
+    body { margin: 0; padding: 0; font-family: Arial, sans-serif; background: #b3d0b3; color: #5F805F; position: relative; }
+    header { background: #fdf6ec; text-align: center; padding: 10px }
+    #titulo { font-family: 'Chewy', cursive; font-size: 2.8em; text-transform: uppercase; margin: 0; }
+    .container { max-width: 900px; margin: auto; padding: 20px; text-align: center; }
+    .galeria { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; justify-content: center; }
+    .item { border: 1px solid #5F805F; border-radius: 10px; padding: 10px; background: #fff; box-sizing: border-box; }
+    .item .emoji { font-size: 48px; }
+    button { background: #5F805F; color: #fff; border: none; padding: 10px; border-radius: 5px; cursor: pointer; margin: 5px; text-transform: uppercase; }
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,.5); justify-content: center; align-items: center; z-index: 1000; }
+    .modal.show { display: flex; }
+    .modal-content { background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,.3); max-width: 500px; width: 90%; text-align: center; }
     @media (max-width: 768px) {
-      .animal-strip {
-        font-size: 32px;
-      }
-      #titulo {
-        font-size: 1.8em;
-      }
+      .galeria { grid-template-columns: repeat(2, 1fr); }
+      .container { padding: 10px; }
+      #titulo { font-size: 2em; }
     }
   </style>
+<link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div class="lateral-emojis esquerda" style="position: fixed; top: 150px; left: 0; bottom: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 8px; font-size: 28px; z-index: 999; pointer-events: none;">
+   <span><div></div> </span><span><div></div></span> <span>🐵</span><span>🦊</span><span>🦉</span><span>🦒</span><span>🦝</span>
+    <span>🦁</span><span>🐯</span><span>🐘</span><span>🐸</span><span>🐢</span>
+    <span>🦥</span><span>🦔</span><span>🦧</span><span>🦛</span><span>🦓</span>
+    <span>🦍</span><span>🦨</span><span>🦦</span><span>🦣</span><span>🪲</span>
+  </div>
+  <div class="lateral-emojis direita" style="position: fixed; top: 150px; right: 0; bottom: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 8px; font-size: 28px; z-index: 999; pointer-events: none;">
+    <span><div></div> </span><span><div></div></span><span>🪲</span><span>🦣</span><span>🦦</span><span>🦨</span><span>🦍</span>
+    <span>🦓</span><span>🦛</span><span>🦧</span><span>🦔</span><span>🦥</span>
+    <span>🐢</span><span>🐸</span><span>🐘</span><span>🐯</span><span>🦁</span>
+    <span>🦝</span><span>🦒</span><span>🦉</span><span>🦊</span><span>🐵</span>
+  </div>
   <header>
-    <div class="animal-strip" style="align-items: baseline;">
-  <span style="font-size:45px; line-height: 1;">🐵</span>
-  <span style="font-size:50px; line-height: 1;">🦊</span>
-  <span style="font-size:55px; line-height: 1;">🦉</span>
-  <span style="font-size:60px; line-height: 1;">🦒</span>
-  <span style="font-size:65px; line-height: 1;">🦝</span>
-  <span style="font-size:84px; line-height: 1;">🦁</span>
-  <span style="font-size:65px; line-height: 1;">🐯</span>
-  <span style="font-size:60px; line-height: 1;">🐘</span>
-  <span style="font-size:55px; line-height: 1;">🐸</span>
-  <span style="font-size:50px; line-height: 1;">🐢</span>
-  <span style="font-size:45px; line-height: 1;">🦜</span>
-</div>
-    <h1 id="titulo" style="text-transform:uppercase; font-family:'Chewy', cursive; font-size:3.5em;">CHÁ DO JOÃO VICTOR</h1>
-  </header>
+  <img src="cha-joao-victor-cabecalho.png" alt="Chá do João Victor" style="max-width:100%; height:auto; display:block; margin:auto;">
+</header>
+
   <div class="container">
-    <h2 style="margin-top:20px; text-transform:uppercase;">Lista de Presentes</h2>
+    <h2 style="text-transform:uppercase;">Data e Local do Evento</h2>
+    <p><strong style="color:#3b5f3b; font-size:1.1em;">📅 Dia 29/06 às 12h<br>📍 Mundo Animal - Curitiba</strong><br><span style="color:#444">Endereço: R. Rockefeller, 187 - Rebouças, Curitiba - PR</span></p>
+    <iframe src="https://www.google.com/maps?q=Mundo+Animal+Lanchonete+Tem%C3%A1tica+-+Curitiba,+R.+Rockefeller,+187+-+Rebou%C3%A7as,+Curitiba+-+PR&output=embed" width="100%" height="200" style="border:0;border-radius:10px;margin-bottom:30px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <h2 style="text-transform:uppercase;margin-top:30px">Lista de Presentes</h2>
     <p>Se preferir contribuir com o nosso chá, escolha um presente para o João!</p>
     <div id="presentes" class="galeria"></div>
   </div>
-<script>
-const produtos = [
-  { id: 100, nome: "Chocalho Espacial", emoji: "🪐", valor: 35.25, cotas: 0 },
-  { id: 101, nome: "Babador de Bolinhas", emoji: "🧣", valor: 42.50, cotas: 0 },
-  { id: 102, nome: "Meias com Sininhos", emoji: "🧦", valor: 48.75, cotas: 0 },
+
+  <script>
+    
+
+    
+  </script>
+
+
+  <script>
+    const produtos = [
   { id: 0, nome: "Cuequinha Antiestresse", emoji: "🩲", valor: 57.25, cotas: 5 },
-  { id: 1, nome: "Mamadeira Turbo 3000", emoji: "🍼", valor: 66.50, cotas: 4 },
-  { id: 2, nome: "Fralda com Bluetooth", emoji: "🧷", valor: 85.00, cotas: 7 },
-  { id: 3, nome: "Roupão Jedi Baby", emoji: "🛁", valor: 77.25, cotas: 6 },
-  { id: 4, nome: "Patinho GPS de Banho", emoji: "🦆", valor: 70.75, cotas: 5 },
-  { id: 5, nome: "Body Estampado de Dinossauro", emoji: "👕", valor: 77.75, cotas: 4 },
-  { id: 6, nome: "Babador Wi-Fi", emoji: "🧣", valor: 59.25, cotas: 3 },
-  { id: 7, nome: "Naninha Falante", emoji: "🧸", valor: 81.00, cotas: 6 },
-  { id: 8, nome: "Termômetro Musical", emoji: "🌡️", valor: 91.25, cotas: 3 },
-  { id: 9, nome: "Tapete de Dança Baby", emoji: "🩰", valor: 83.75, cotas: 4 },
-  { id: 10, nome: "Kit Higiene com Glitter", emoji: "🧼", valor: 68.75, cotas: 8 },
-  { id: 11, nome: "Travesseiro Antigravidade", emoji: "🛌", valor: 86.25, cotas: 4 },
-  { id: 12, nome: "Copo Anti-Vazamento Jedi", emoji: "🥤", valor: 81.25, cotas: 5 },
-  { id: 13, nome: "Almofada com Memória Afetiva", emoji: "🛋️", valor: 72.75, cotas: 4 },
-  { id: 14, nome: "Livro Mágico de Banho", emoji: "📖", valor: 96.00, cotas: 3 },
-  { id: 15, nome: "Canguru com Suspensório Ninja", emoji: "🦘", valor: 93.50, cotas: 4 },
+  { id: 1, nome: "Mamadeira Turbo 3000", emoji: "🍼", valor: 66.50, cotas: 3 },
+  { id: 2, nome: "Fralda com Bluetooth", emoji: "🧷", valor: 84.75, cotas: 6 },
+  { id: 3, nome: "Roupão Jedi Baby", emoji: "🧥", valor: 77.25, cotas: 4 },
+  { id: 4, nome: "Patinho GPS de Banho", emoji: "🦆", valor: 70.50, cotas: 5 },
+  { id: 5, nome: "Body Estampado de Dinossauro", emoji: "🦖", valor: 77.50, cotas: 5 },
+  { id: 6, nome: "Babador Wi-Fi", emoji: "🧣", valor: 59.25, cotas: 6 },
+  { id: 7, nome: "Naninha Falante", emoji: "🧸", valor: 80.75, cotas: 4 },
+  { id: 8, nome: "Termômetro Musical", emoji: "🌡️", valor: 91.25, cotas: 5 },
+  { id: 9, nome: "Tapete de Dança Baby", emoji: "🪩", valor: 83.75, cotas: 4 },
+  { id: 10, nome: "Kit Higiene com Glitter", emoji: "✨", valor: 68.75, cotas: 5 },
+  { id: 11, nome: "Travesseiro Antigravidade", emoji: "🛌", valor: 86.25, cotas: 5 },
+  { id: 12, nome: "Copo Anti-Vazamento Jedi", emoji: "🥤", valor: 81.25, cotas: 6 },
+  { id: 13, nome: "Almofada com Memória Afetiva", emoji: "🛋️", valor: 72.75, cotas: 6 },
+  { id: 14, nome: "Livro Mágico de Banho", emoji: "📘", valor: 96.00, cotas: 4 },
+  { id: 15, nome: "Canguru com Suspensório Ninja", emoji: "🐨", valor: 93.25, cotas: 4 },
   { id: 16, nome: "Cadeirinha com Ejetor de Risadas", emoji: "🪑", valor: 95.75, cotas: 5 },
-  { id: 17, nome: "Organizador Intergaláctico", emoji: "🗃️", valor: 95.75, cotas: 5 },
-  { id: 18, nome: "Fralda Recarregável", emoji: "🧷", valor: 72.75, cotas: 3 },
-  { id: 19, nome: "Berço com Porta USB", emoji: "🛏️", valor: 59.25, cotas: 5 },
+  { id: 17, nome: "Organizador Intergaláctico", emoji: "🛸", valor: 95.25, cotas: 5 },
+  { id: 18, nome: "Fralda Recarregável", emoji: "🧷", valor: 72.50, cotas: 6 },
+  { id: 19, nome: "Berço com Porta USB", emoji: "🛏️", valor: 59.00, cotas: 4 },
   { id: 20, nome: "Cortador de Unha com Lanterna", emoji: "✂️", valor: 93.50, cotas: 4 },
-  { id: 21, nome: "Mochila com Porta Fralda Emergencial", emoji: "🎒", valor: 78.25, cotas: 3 },
-  { id: 22, nome: "Termômetro Inteligente", emoji: "🌡️", valor: 57.75, cotas: 6 },
-  { id: 23, nome: "Tapete com Alarme de Soneca", emoji: "🧸", valor: 92.75, cotas: 3 },
-  { id: 24, nome: "Trocador com Wi-Fi", emoji: "🔄", valor: 64.00, cotas: 3 },
-  { id: 25, nome: "Cobertor Antiestresse", emoji: "🛏️", valor: 98.50, cotas: 4 },
-  { id: 26, nome: "Touca com Isolamento Térmico", emoji: "🧢", valor: 65.75, cotas: 5 },
-  { id: 27, nome: "Meias de Super-Herói", emoji: "🧦", valor: 68.00, cotas: 3 },
-  { id: 28, nome: "Toalha que Abraça", emoji: "🧻", valor: 88.75, cotas: 4 },
-  { id: 29, nome: "Travesseiro Sonífero", emoji: "🛌", valor: 74.50, cotas: 3 },
-  { id: 30, nome: "Kit Talheres Gamer", emoji: "🍴", valor: 78.75, cotas: 4 },
-  { id: 31, nome: "Lençol Autolimpante", emoji: "🛏️", valor: 71.75, cotas: 8 },
-  { id: 32, nome: "Pote Térmico com Bluetooth", emoji: "🥣", valor: 92.75, cotas: 4 },
-  { id: 33, nome: "Mordedor de Arco-Íris", emoji: "🌈", valor: 82.25, cotas: 6 },
-  { id: 34, nome: "Sabonete com Aroma de Ursinho", emoji: "🧼", valor: 79.00, cotas: 5 },
-  { id: 35, nome: "Kit Spa Bebê", emoji: "💆", valor: 59.00, cotas: 8 },
-  { id: 36, nome: "Babá Eletrônica com IA", emoji: "🎥", valor: 97.75, cotas: 6 },
-  { id: 37, nome: "Cadeira Musical de Alimentação", emoji: "🪑", valor: 92.25, cotas: 3 },
-  { id: 38, nome: "Troninho com Feedback Sonoro", emoji: "🚽", valor: 63.75, cotas: 7 },
-  { id: 39, nome: "Kit Penteado Fashion Baby", emoji: "💇", valor: 83.75, cotas: 3 },
-  { id: 40, nome: "Touca para Sonhos Doces", emoji: "🧢", valor: 55.75, cotas: 4 },
-  { id: 41, nome: "Almofada que Conta Histórias", emoji: "🛋️", valor: 82.75, cotas: 5 },
-  { id: 42, nome: "Colchonete Inflável Mágico", emoji: "🛏️", valor: 101.50, cotas: 8 },
-  { id: 43, nome: "Carregador de Bebê Humano", emoji: "🎒", valor: 89.75, cotas: 6 },
-  { id: 44, nome: "Macacão com GPS", emoji: "🧥", valor: 101.25, cotas: 4 },
-  { id: 45, nome: "Fralda Noturna com Luz de LED", emoji: "💡", valor: 55.75, cotas: 3 },
-  { id: 46, nome: "Toalhas que Fazem Cócegas", emoji: "🧻", valor: 88.50, cotas: 8 },
-  { id: 47, nome: "Copo de Pré-Treinamento infantil", emoji: "🥤", valor: 84.25, cotas: 4 }
+  { id: 21, nome: "Mochila com Porta Fralda Emergencial", emoji: "🎒", valor: 78.25, cotas: 6 },
+  { id: 22, nome: "Termômetro Inteligente", emoji: "🌡️", valor: 57.75, cotas: 5 },
+  { id: 23, nome: "Tapete com Alarme de Soneca", emoji: "🧸", valor: 92.75, cotas: 5 },
+  { id: 24, nome: "Trocador com Wi-Fi", emoji: "🔄", valor: 64.00, cotas: 4 },
+  { id: 25, nome: "Cobertor Antiestresse", emoji: "🛏️", valor: 98.25, cotas: 6 },
+  { id: 26, nome: "Touca com Isolamento Térmico", emoji: "🎩", valor: 65.75, cotas: 5 },
+  { id: 27, nome: "Meias de Super-Herói", emoji: "🧦", valor: 67.75, cotas: 6 },
+  { id: 28, nome: "Toalha que Abraça", emoji: "🛁", valor: 88.75, cotas: 4 },
+  { id: 29, nome: "Travesseiro Sonífero", emoji: "🛏️", valor: 74.50, cotas: 6 },
+  { id: 30, nome: "Kit Talheres Gamer", emoji: "🍴", valor: 78.75, cotas: 5 },
+  { id: 31, nome: "Lençol Autolimpante", emoji: "🛏️", valor: 71.75, cotas: 6 },
+  { id: 32, nome: "Pote Térmico com Bluetooth", emoji: "🥣", valor: 92.75, cotas: 6 },
+  { id: 33, nome: "Mordedor de Arco-Íris", emoji: "🌈", valor: 82.25, cotas: 5 },
+  { id: 34, nome: "Sabonete com Aroma de Ursinho", emoji: "🧼", valor: 78.75, cotas: 5 },
+  { id: 35, nome: "Kit Spa Bebê", emoji: "🧴", valor: 58.75, cotas: 4 },
+  { id: 36, nome: "Babá Eletrônica com IA", emoji: "📹", valor: 97.75, cotas: 6 },
+  { id: 37, nome: "Cadeira Musical de Alimentação", emoji: "🎶", valor: 92.25, cotas: 4 },
+  { id: 38, nome: "Troninho com Feedback Sonoro", emoji: "🚽", valor: 63.75, cotas: 5 },
+  { id: 39, nome: "Kit Penteado Fashion Baby", emoji: "💇", valor: 83.50, cotas: 5 },
+  { id: 40, nome: "Touca para Sonhos Doces", emoji: "🎩", valor: 55.75, cotas: 4 },
+  { id: 41, nome: "Almofada que Conta Histórias", emoji: "📖", valor: 82.75, cotas: 4 },
+  { id: 42, nome: "Colchonete Inflável Mágico", emoji: "🛏️", valor: 101.25, cotas: 6 },
+  { id: 43, nome: "Carregador de Bebê Humano", emoji: "🧍", valor: 89.75, cotas: 5 },
+  { id: 44, nome: "Macacão com GPS", emoji: "🧥", valor: 101.00, cotas: 3 },
+  { id: 45, nome: "Fralda Noturna com Luz de LED", emoji: "💡", valor: 55.50, cotas: 3 },
+  { id: 46, nome: "Toalhas que Fazem Cócegas", emoji: "🛁", valor: 88.50, cotas: 5 },
+  { id: 47, nome: "Copo de Pré-Treinamento infantil", emoji: "🥛", valor: 84.25, cotas: 4 }
 ];
 
-function renderizarPresentes() {
-  const galeria = document.getElementById('presentes');
-  galeria.innerHTML = '';
-  produtos.forEach(produto => {
-    const item = document.createElement('div');
-    item.className = 'item';
-    item.innerHTML = `
-      <div class="emoji">${produto.emoji}</div>
-      <h3>${produto.nome}</h3>
-      <p><strong>Valor:</strong> R$ ${produto.valor.toFixed(2).replace('.', ',')}</p>
-      ${produto.cotas > 0
-        ? `<p><strong>Cotas disponíveis:</strong> ${produto.cotas}</p><button onclick="presentear(${produto.id})">PRESENTEAR</button>`
-        : `<p style='color:gray'><strong>ESGOTADO</strong></p><button disabled style='background:gray;cursor:not-allowed'>ESGOTADO</button>`}`;
-    galeria.appendChild(item);
-  });
-}
+    function renderizarPresentes() {
+      const galeria = document.getElementById('presentes');
+      galeria.innerHTML = '';
+      produtos.forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'item';
+        div.innerHTML = `
+          <div class='emoji'>${p.emoji}</div>
+          <h3>${p.nome}</h3>
+          <p style='color:black;font-weight:bold'>Valor: R$ ${p.valor.toFixed(2).replace('.', ',')}</p>
+          <p>Cotas disponíveis: ${p.cotas}</p>
+          <button onclick="abrirModalPagamento(${p.id})">Presentear</button>
+        `;
+        galeria.appendChild(div);
+      });
+    }
 
-function presentear(id) {
-  const produto = produtos.find(p => p.id === id);
-  if (!produto || produto.cotas <= 0) return;
-  const modal = document.createElement('div');
-  modal.className = 'modal show';
-  Object.assign(modal.style, {
-    position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.5)',
-    display: 'flex', justifyContent: 'center', alignItems: 'center'
-  });
-  modal.innerHTML = `
-    <div class='modal-content' style='background:#fff;padding:30px;border-radius:10px;box-shadow:0 0 15px rgba(0,0,0,.3);max-width:500px;width:90%;text-align:center'>
-      <div style='font-size:64px;'>${produto.emoji}</div>
-      <h2>${produto.nome}</h2>
-      <p style='font-size:1.2em;color:black;font-weight:bold'>Valor: R$ ${produto.valor.toFixed(2).replace('.', ',')}</p>
-      <p style='font-size:1.1em;color:black'>Chave Pix: <strong>065.755.339-57</strong>
-        <button onclick="navigator.clipboard.writeText('06575533957');this.textContent='Copiado!';setTimeout(()=>this.textContent='Copiar',2000);">Copiar</button><br>
-        <span style='font-size:0.65em;color:gray;'>Renato Augusto Dândalo</span><br><img src='/QrCode.jpeg' alt='QR Code Pix' style='margin-top:10px;width:150px;height:150px;display:block;margin-left:auto;margin-right:auto;'>
-      </p>
-      <p>Papai, mamãe e João agradecem o presente!</p>
-      <div style='font-size: 1em; text-align: center;'>❤️</div>
-      <button onclick="confirmarPresente(${produto.id})" style='margin-top:10px;background:#5F805F;color:#fff;padding:10px 20px;border:none;border-radius:5px;font-weight:bold;cursor:pointer'>Finalizar</button>
-    </div>`;
-  document.body.appendChild(modal);
-}
+    function abrirModalPagamento(id) {
+      const produto = produtos.find(p => p.id === id);
+      const modal = document.createElement('div');
+      modal.className = 'modal show';
+      modal.innerHTML = `
+        <div class='modal-content'>
+          <div style='font-size:64px;'>${produto.emoji}</div>
+          <h2>${produto.nome}</h2>
+          <p style='font-size:1.2em;color:black;font-weight:bold'>Valor: R$ ${produto.valor.toFixed(2).replace('.', ',')}</p>
+          <p style='font-size:1.1em;color:black'>Chave Pix: <strong>065.755.339-57</strong> <button onclick='navigator.clipboard.writeText("06575533957")'>Copiar</button></p>
+          <p>Papai, mamãe e João agradecem o presente!</p>
+<p style='font-size:0.75em; color:gray;'>Renato Augusto Dândalo</p>
+<p><img src='QrCode.jpeg' alt='QR Code Pix' style='max-width:180px; margin: 10px auto; display:block;'></p>
+          <p>Papai, mamãe e João agradecem o presente!</p>
+<div style='font-size:32px;'>❤️</div>
+          <button onclick='fecharModal(this)'>Finalizar</button>
+        </div>`;
+      document.body.appendChild(modal);
+    }
 
-function confirmarPresente(id) {
-  const produto = produtos.find(p => p.id === id);
-  if (!produto || produto.cotas <= 0) return;
-  produto.cotas--;
-  document.querySelectorAll('.modal').forEach(m => m.remove());
-  renderizarPresentes();
-  alert('Obrigado pela mensagem e pelo presente!');
-}
+    function fecharModal(btn) {
+      document.body.removeChild(btn.closest('.modal'));
+    }
 
-renderizarPresentes();
-</script>
+    window.addEventListener('DOMContentLoaded', renderizarPresentes);
+  </script>
 </body>
 </html>
