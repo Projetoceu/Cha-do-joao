@@ -1,0 +1,23 @@
+{
+  "name": "cha-do-joao",
+  "version": "1.0.0",
+  "description": "Chá do joão",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Projetoceu/Cha-do-joao.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Projetoceu/Cha-do-joao/issues"
+  },
+  "homepage": "https://github.com/Projetoceu/Cha-do-joao#readme",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.50.0"
+  }
+}
