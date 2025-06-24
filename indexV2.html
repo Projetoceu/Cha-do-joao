@@ -186,5 +186,19 @@
     .catch(err => alert('Erro ao copiar a chave Pix'));
 }
 </script>
+<footer style="background:#fdf6ec;padding:10px;text-align:center;">
+  <input type="password" id="senha-restrita" placeholder="Senha" style="padding:5px" />
+  <button onclick="acessarRestrito()">Acessar</button>
+</footer>
+<script>
+  function acessarRestrito() {
+    const senha = document.getElementById('senha-restrita').value;
+    if (senha === '08072010') {
+      window.location.href = 'area-restrita.html';
+    } else {
+      alert('Senha incorreta');
+    }
+  }
+</script>
 </body>
 </html>

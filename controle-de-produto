@@ -4,21 +4,21 @@
     "nome": "Cuequinha Antiestresse",
     "emoji": "🩲",
     "valor": 57.25,
-    "cotas": 0
+    "cotas": -1
   },
   {
     "id": 1,
     "nome": "Mamadeira Turbo 3000",
     "emoji": "🍼",
     "valor": 66.5,
-    "cotas": 3
+    "cotas": 0
   },
   {
     "id": 2,
     "nome": "Fralda com Bluetooth",
     "emoji": "🧷",
     "valor": 84.75,
-    "cotas": 6
+    "cotas": 2
   },
   {
     "id": 3,

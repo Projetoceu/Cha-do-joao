@@ -172,15 +172,22 @@
       }
     }
 
-    function finalizarModal(id, btn) {
-      const nome = document.getElementById(`nome-${id}`).value.trim();
-      const msg = document.getElementById(`msg-${id}`).value.trim();
-      if (!nome || !msg) {
-        alert('Preencha nome e mensagem.');
-        return;
+async function finalizarModal(id, btn) {
+        const nome = document.getElementById(`nome-${id}`).value.trim();
+        const msg = document.getElementById(`msg-${id}`).value.trim();
+        if (!nome || !msg) {
+          alert('Preencha nome e mensagem.');
+          return;
+        }
+        try {
+          await fetch('/.netlify/functions/registrar-mensagem', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nome, mensagem: msg, produto: produtos[id].nome, valor: produtos[id].valor })
+          });
+        } catch (err) {}
+        fecharModal(btn);
       }
-      fecharModal(btn);
-    }
 
     window.addEventListener('DOMContentLoaded', renderizarPresentes);
   function copiarChavePix(btn) {
@@ -191,6 +198,20 @@
     })
     .catch(err => alert('Erro ao copiar a chave Pix'));
 }
+</script>
+<footer style="background:#fdf6ec;padding:10px;text-align:center;">
+  <input type="password" id="senha-restrita" placeholder="Senha" style="padding:5px" />
+  <button onclick="acessarRestrito()">Acessar</button>
+</footer>
+<script>
+  function acessarRestrito() {
+    const senha = document.getElementById('senha-restrita').value;
+    if (senha === '08072010') {
+      window.location.href = 'area-restrita.html';
+    } else {
+      alert('Senha incorreta');
+    }
+  }
 </script>
 </body>
 </html>
