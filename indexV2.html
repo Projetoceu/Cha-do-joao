@@ -87,8 +87,8 @@
           <div class='emoji'>${p.emoji}</div>
           <h3>${p.nome}</h3>
           <p style='color:black;font-weight:bold'>Valor: R$ ${p.valor.toFixed(2).replace('.', ',')}</p>
-          <p>Cotas disponíveis: ${p.cotas}</p>
-          <button onclick="abrirModalPagamento(${p.id})">Presentear</button>
+          <p>${p.cotas > 0 ? 'Cotas disponíveis: ' + p.cotas : '<span style="color:red;font-weight:bold">Produto Esgotado</span>'}</p>
+          ${p.cotas > 0 ? '<button onclick="abrirModalPagamento(' + p.id + ')">Presentear</button>' : '<button disabled>Esgotado</button>'}
         `;
         galeria.appendChild(div);
       });
@@ -109,13 +109,38 @@
           <p>Caso queira levar um presente no dia, fica à sua escolha!</p>
           <p>Papai, mamãe e João agradecem o presente!</p>
 <div style='font-size:32px;'>❤️</div>
-          <button onclick='fecharModal(this)'>Finalizar</button>
+          <button onclick='confirmarPresente(${produto.id}, this)'>Finalizar</button>
         </div>`;
       document.body.appendChild(modal);
     }
 
     function fecharModal(btn) {
       document.body.removeChild(btn.closest('.modal'));
+    }
+
+    async function confirmarPresente(id, btn) {
+      btn.disabled = true;
+      btn.textContent = 'Enviando...';
+      try {
+        const resp = await fetch('/.netlify/functions/confirmar-presente', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id })
+        });
+        if (resp.ok) {
+          fecharModal(btn);
+          await carregarPresentes();
+        } else {
+          const data = await resp.json();
+          alert(data.error || 'Erro ao confirmar');
+          btn.disabled = false;
+          btn.textContent = 'Finalizar';
+        }
+      } catch (err) {
+        alert('Erro ao confirmar');
+        btn.disabled = false;
+        btn.textContent = 'Finalizar';
+      }
     }
 
     window.addEventListener('DOMContentLoaded', carregarPresentes);
