@@ -4,7 +4,7 @@ const path = require('path');
 exports.handler = async () => {
   try {
     const data = JSON.parse(
-      fs.readFileSync(path.resolve(__dirname, '..', '..', 'controle-de-produto.json'), 'utf8')
+      fs.readFileSync(path.resolve(__dirname, '..', '..', 'controle-de-produto'), 'utf8')
     );
     return {
       statusCode: 200,

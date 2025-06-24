@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const file = path.resolve(__dirname, '..', '..', 'controle-de-produto.json');
+const file = path.resolve(__dirname, '..', '..', 'controle-de-produto');
 
 function carregarProdutos() {
   return JSON.parse(fs.readFileSync(file, 'utf8'));

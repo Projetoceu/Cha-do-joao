@@ -4,5 +4,5 @@
   node_bundler = "esbuild"
 
 [functions]
-  included_files = ["netlify/functions/**", "controle-de-produto.json"]
+  included_files = ["netlify/functions/**", "controle-de-produto"]
 
