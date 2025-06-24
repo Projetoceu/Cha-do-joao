@@ -50,7 +50,8 @@
     <div id="presentes" class="galeria"></div>
   </div>
 
-  
+
+
 
 
   <script>
@@ -65,12 +66,12 @@
         } else {
           console.error('Erro ao buscar produtos:', resp.status);
           document.getElementById('presentes').innerHTML =
-            '<p style="color:red">N\u00e3o foi poss\u00edvel carregar a lista de produtos.</p>';
+            '<p style="color:red">Não foi possível carregar a lista de produtos.</p>';
         }
       } catch (err) {
         console.error('Falha na requisição', err);
         document.getElementById('presentes').innerHTML =
-          '<p style="color:red">N\u00e3o foi poss\u00edvel carregar a lista de produtos.</p>';
+          '<p style="color:red">Não foi possível carregar a lista de produtos.</p>';
       }
       renderizarPresentes();
     }
