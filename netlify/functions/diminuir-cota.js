@@ -1,6 +1,7 @@
 const { createClient } = require('@supabase/supabase-js');
 
 // Use variáveis de ambiente com os nomes corretos definidos no Netlify
+// Use the same environment variables defined in netlify.toml and .env
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_ANON_KEY

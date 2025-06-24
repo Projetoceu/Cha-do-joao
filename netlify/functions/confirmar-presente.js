@@ -1,6 +1,6 @@
 const { createClient } = require('@supabase/supabase-js');
 
-// A leitura das credenciais utiliza os mesmos nomes definidos em `netlify.toml`
+// Use the same environment variables defined in netlify.toml and .env
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_ANON_KEY
