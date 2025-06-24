@@ -39,5 +39,16 @@ npm install -g netlify-cli  # ou use `npx netlify dev`
    npx http-server .
    ```
 
+## Atualizar cotas dos produtos
+
+Execute o script abaixo para gerar o arquivo `cotas.json` com a
+quantidade disponível de cada produto. Ele utiliza as variáveis de
+ambiente `SUPABASE_URL` e `SUPABASE_ANON_KEY` para consultar o banco de
+dados.
+
+```bash
+npm run update-cotas
+```
+
    A lista de presentes em `indexV2.html` usará um conjunto de dados de
    exemplo se a API não estiver disponível.
