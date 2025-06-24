@@ -1,26 +1,20 @@
-// netlify/functions/listar-produtos.js
-const { createClient } = require('@supabase/supabase-js');
+const fs = require('fs');
+const path = require('path');
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_ANON_KEY
-);
-
+// Retorna a lista de produtos do arquivo controle-de-produto.json
 exports.handler = async () => {
-  const { data, error } = await supabase
-    .from('produtos')
-    .select('id, nome, valor, emoji, cotas');
-
-  if (error) {
-    console.error('Erro Supabase:', error);
+  try {
+    const file = path.resolve(__dirname, '..', '..', 'controle-de-produto.json');
+    const data = JSON.parse(fs.readFileSync(file, 'utf8'));
+    return {
+      statusCode: 200,
+      body: JSON.stringify(data),
+    };
+  } catch (err) {
+    console.error('Erro ao ler arquivo:', err);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Erro ao consultar banco de dados.' }),
+      body: JSON.stringify({ error: 'Falha ao ler dados.' }),
     };
   }
-
-  return {
-    statusCode: 200,
-    body: JSON.stringify(data),
-  };
 };

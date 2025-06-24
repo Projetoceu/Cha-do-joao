@@ -4,8 +4,7 @@
   "description": "Chá do joão",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "update-cotas": "node scripts/atualizarCotas.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -18,7 +17,5 @@
     "url": "https://github.com/Projetoceu/Cha-do-joao/issues"
   },
   "homepage": "https://github.com/Projetoceu/Cha-do-joao#readme",
-  "dependencies": {
-    "@supabase/supabase-js": "^2.50.0"
-  }
+  "dependencies": {}
 }
