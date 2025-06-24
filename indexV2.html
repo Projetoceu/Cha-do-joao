@@ -58,21 +58,31 @@
     let produtos = [];
 
     async function carregarPresentes() {
+      const galeria = document.getElementById('presentes');
       try {
         const resp = await fetch('/.netlify/functions/listar-produtos');
         if (resp.ok) {
           produtos = await resp.json();
         } else {
           console.error('Erro ao buscar produtos:', resp.status);
+          if (!galeria.querySelector('.erro-carregar')) {
+            galeria.insertAdjacentHTML('beforeend', "<p class='erro-carregar' style='color:red'>Não foi possível carregar a lista de presentes. Verifique sua conexão.</p>");
+          }
         }
       } catch (err) {
         console.error('Falha na requisição', err);
+        if (!galeria.querySelector('.erro-carregar')) {
+          galeria.insertAdjacentHTML('beforeend', "<p class='erro-carregar' style='color:red'>Não foi possível carregar a lista de presentes. Verifique sua conexão.</p>");
+        }
       }
       renderizarPresentes();
     }
 
     function renderizarPresentes() {
       const galeria = document.getElementById('presentes');
+      if (produtos.length === 0) {
+        return;
+      }
       galeria.innerHTML = '';
       produtos.forEach(p => {
         const div = document.createElement('div');
