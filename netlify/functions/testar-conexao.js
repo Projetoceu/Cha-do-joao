@@ -1,11 +1,11 @@
 const fs = require('fs');
 const path = require('path');
+const { getWritablePath } = require('./lib/fileHelper');
 
 exports.handler = async () => {
   try {
-    const data = JSON.parse(
-      fs.readFileSync(path.resolve(__dirname, '..', '..', 'controle-de-produto'), 'utf8')
-    );
+    const file = getWritablePath('controle-de-produto');
+    const data = JSON.parse(fs.readFileSync(file, 'utf8'));
     return {
       statusCode: 200,
       body: JSON.stringify({ sucesso: true, dados: data.slice(0, 1) }),
