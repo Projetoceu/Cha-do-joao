@@ -7,7 +7,9 @@ const path = require('path');
  * the file is copied to /tmp on first use and that path is returned instead.
  */
 function getWritablePath(filename) {
-  const repoPath = path.resolve(__dirname, '..', '..', filename);
+  // Navigate three directories up from this file's location to reach the repo root
+  // so that files like "controle-de-produto" at the project root can be accessed
+  const repoPath = path.resolve(__dirname, '..', '..', '..', filename);
   const tmpPath = path.join('/tmp', filename);
 
   try {
