@@ -106,6 +106,13 @@
           <p style='font-size:1.1em;color:black'>Chave Pix: <strong>065.755.339-57</strong> <button onclick='copiarChavePix(this)'>Copiar</button></p>
 <p style='font-size:0.75em; color:gray;'>Renato Augusto Dândalo</p>
 <p><img src='QrCode.jpeg' alt='QR Code Pix' style='max-width:180px; margin: 10px auto; display:block;'></p>
+          <div style='text-align:left;margin-top:15px;'>
+            <label>Nome:<br><input id='nome-${produto.id}' maxlength='50' style='width:100%;padding:5px;margin-top:4px;' required></label>
+            <label style='display:block;margin-top:10px;'>Mensagem:<br>
+              <textarea id='msg-${produto.id}' maxlength='500' rows='4' style='width:100%;padding:5px;margin-top:4px;' oninput='atualizarContador(${produto.id})' required></textarea>
+              <div style='text-align:right;font-size:0.85em;'><span id='contador-${produto.id}'>500</span> caracteres restantes</div>
+            </label>
+          </div>
           <p>Caso queira levar um presente no dia, fica à sua escolha!</p>
           <p>Papai, mamãe e João agradecem o presente!</p>
 <div style='font-size:32px;'>❤️</div>
@@ -118,14 +125,29 @@
       document.body.removeChild(btn.closest('.modal'));
     }
 
+    function atualizarContador(id) {
+      const area = document.getElementById(`msg-${id}`);
+      const contador = document.getElementById(`contador-${id}`);
+      if (area && contador) {
+        contador.textContent = 500 - area.value.length;
+      }
+    }
+
     async function confirmarPresente(id, btn) {
+      const nome = document.getElementById(`nome-${id}`).value.trim();
+      const msg = document.getElementById(`msg-${id}`).value.trim();
+      if (!nome || !msg) {
+        alert('Preencha nome e mensagem.');
+        return;
+      }
+
       btn.disabled = true;
       btn.textContent = 'Enviando...';
       try {
         const resp = await fetch('/.netlify/functions/confirmar-presente', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id })
+          body: JSON.stringify({ id, nome, mensagem: msg })
         });
         if (resp.ok) {
           fecharModal(btn);
