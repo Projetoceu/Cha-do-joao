@@ -7,9 +7,10 @@ const path = require('path');
  * the file is copied to /tmp on first use and that path is returned instead.
  */
 function getWritablePath(filename) {
-  // Navigate three directories up from this file's location to reach the repo root
-  // so that files like "controle-de-produto" at the project root can be accessed
-  const repoPath = path.resolve(__dirname, '..', '..', '..', filename);
+  // Resolve the file relative to the current working directory. When running
+  // locally `process.cwd()` is the repository root. In the serverless runtime
+  // it points to the unpacked function directory where the files are bundled.
+  const repoPath = path.join(process.cwd(), filename);
   const tmpPath = path.join('/tmp', filename);
 
   try {
