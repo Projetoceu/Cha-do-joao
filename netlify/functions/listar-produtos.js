@@ -1,11 +1,11 @@
 const fs = require('fs');
 const path = require('path');
-const { resolveDataPath } = require('./util');
+const { getWritablePath } = require('./lib/fileHelper');
 
 // Retorna a lista de produtos do arquivo controle-de-produto
 exports.handler = async () => {
   try {
-    const file = resolveDataPath('controle-de-produto');
+    const file = getWritablePath('controle-de-produto');
     const data = JSON.parse(fs.readFileSync(file, 'utf8'));
     return {
       statusCode: 200,

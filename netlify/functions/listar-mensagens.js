@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
-const { resolveDataPath } = require('./util');
+const { getWritablePath } = require('./lib/fileHelper');
 
-const file = resolveDataPath('mensagens.json');
+const file = getWritablePath('mensagens.json');
 
 exports.handler = async () => {
   try {

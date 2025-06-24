@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
-const { resolveDataPath } = require('./util');
+const { getWritablePath } = require('./lib/fileHelper');
 
-const file = resolveDataPath('controle-de-produto');
+const file = getWritablePath('controle-de-produto');
 
 function carregarProdutos() {
   return JSON.parse(fs.readFileSync(file, 'utf8'));
