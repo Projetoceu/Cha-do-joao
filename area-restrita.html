@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Área Restrita</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1 { text-align: center; }
+    h2 { margin-top: 30px; }
+  </style>
+</head>
+<body>
+  <h1>Área Restrita</h1>
+  <div id="mensagens"></div>
+  <script>
+    async function carregarMensagens() {
+      try {
+        const resp = await fetch('/.netlify/functions/listar-mensagens');
+        const dados = resp.ok ? await resp.json() : [];
+        const container = document.getElementById('mensagens');
+        if (dados.length === 0) {
+          container.innerHTML = '<p>Nenhuma mensagem registrada.</p>';
+          return;
+        }
+        const grupos = {};
+        dados.forEach(m => {
+          grupos[m.nome] = grupos[m.nome] || [];
+          grupos[m.nome].push(m);
+        });
+        container.innerHTML = Object.entries(grupos).map(([nome, msgs]) => {
+          const itens = msgs.map(x => `<li><strong>${x.produto}</strong> - R$ ${Number(x.valor).toFixed(2).replace('.', ',')}<br>${x.mensagem}</li>`).join('');
+          return `<h2>${nome}</h2><ul>${itens}</ul>`;
+        }).join('');
+      } catch (err) {
+        document.getElementById('mensagens').innerHTML = '<p>Erro ao carregar mensagens.</p>';
+      }
+    }
+    window.addEventListener('DOMContentLoaded', carregarMensagens);
+  </script>
+</body>
+</html>
