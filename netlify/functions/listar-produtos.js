@@ -1,30 +1,26 @@
+// netlify/functions/listar-produtos.js
 const { createClient } = require('@supabase/supabase-js');
 
 const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_ANON_KEY
 );
 
-exports.handler = async function () {
-  try {
-    const { data, error } = await supabase
-      .from('produtos')
-      .select('id, nome, emoji, valor, cotas')
-      .order('cotas', { ascending: true });
+exports.handler = async () => {
+  const { data, error } = await supabase
+    .from('produtos')
+    .select('id, nome, valor, emoji, cotas');
 
-    if (error) throw error;
-
-    return {
-      statusCode: 200,
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    };
-  } catch (err) {
+  if (error) {
+    console.error('Erro Supabase:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: err.message || 'Erro interno' })
+      body: JSON.stringify({ error: 'Erro ao consultar banco de dados.' }),
     };
   }
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify(data),
+  };
 };
