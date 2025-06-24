@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
+const { getWritablePath } = require('./lib/fileHelper');
 
-const file = path.resolve(__dirname, '..', '..', 'mensagens.json');
+const file = getWritablePath('mensagens.json');
 
 function carregarMensagens() {
   try {
