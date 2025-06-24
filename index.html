@@ -60,35 +60,63 @@
     <div id="presentes" class="galeria"></div>
   </div>
 
-
-
+  
 
 
   <script>
-    // Lista de produtos carregada dinamicamente da API
-    let produtos = [];
-
-    async function carregarPresentes() {
-      try {
-        const resp = await fetch('/.netlify/functions/listar-produtos');
-        if (resp.ok) {
-          produtos = await resp.json();
-        } else {
-          console.error('Erro ao buscar produtos:', resp.status);
-          document.getElementById('presentes').innerHTML =
-            '<p style="color:red">Não foi possível carregar a lista de produtos.</p>';
-        }
-      } catch (err) {
-        console.error('Falha na requisição', err);
-        document.getElementById('presentes').innerHTML =
-          '<p style="color:red">Não foi possível carregar a lista de produtos.</p>';
-      }
-      renderizarPresentes();
-    }
+    const produtos = [
+  { id: 0, nome: "Cuequinha Antiestresse", emoji: "🩲", valor: 57.25, cotas: 5 },
+  { id: 1, nome: "Mamadeira Turbo 3000", emoji: "🍼", valor: 66.50, cotas: 3 },
+  { id: 2, nome: "Fralda com Bluetooth", emoji: "🧷", valor: 84.75, cotas: 6 },
+  { id: 3, nome: "Roupão Jedi Baby", emoji: "🧥", valor: 77.25, cotas: 4 },
+  { id: 4, nome: "Patinho GPS de Banho", emoji: "🦆", valor: 70.50, cotas: 5 },
+  { id: 5, nome: "Body Estampado de Dinossauro", emoji: "🦖", valor: 77.50, cotas: 5 },
+  { id: 6, nome: "Babador Wi-Fi", emoji: "🧣", valor: 59.25, cotas: 6 },
+  { id: 7, nome: "Naninha Falante", emoji: "🧸", valor: 80.75, cotas: 4 },
+  { id: 8, nome: "Termômetro Musical", emoji: "🌡️", valor: 91.25, cotas: 5 },
+  { id: 9, nome: "Tapete de Dança Baby", emoji: "🪩", valor: 83.75, cotas: 4 },
+  { id: 10, nome: "Kit Higiene com Glitter", emoji: "✨", valor: 68.75, cotas: 5 },
+  { id: 11, nome: "Travesseiro Antigravidade", emoji: "🛌", valor: 86.25, cotas: 5 },
+  { id: 12, nome: "Copo Anti-Vazamento Jedi", emoji: "🥤", valor: 81.25, cotas: 6 },
+  { id: 13, nome: "Almofada com Memória Afetiva", emoji: "🛋️", valor: 72.75, cotas: 6 },
+  { id: 14, nome: "Livro Mágico de Banho", emoji: "📘", valor: 96.00, cotas: 4 },
+  { id: 15, nome: "Canguru com Suspensório Ninja", emoji: "🐨", valor: 93.25, cotas: 4 },
+  { id: 16, nome: "Cadeirinha com Ejetor de Risadas", emoji: "🪑", valor: 95.75, cotas: 5 },
+  { id: 17, nome: "Organizador Intergaláctico", emoji: "🛸", valor: 95.25, cotas: 5 },
+  { id: 18, nome: "Fralda Recarregável", emoji: "🧷", valor: 72.50, cotas: 6 },
+  { id: 19, nome: "Berço com Porta USB", emoji: "🛏️", valor: 59.00, cotas: 4 },
+  { id: 20, nome: "Cortador de Unha com Lanterna", emoji: "✂️", valor: 93.50, cotas: 4 },
+  { id: 21, nome: "Mochila com Porta Fralda Emergencial", emoji: "🎒", valor: 78.25, cotas: 6 },
+  { id: 22, nome: "Termômetro Inteligente", emoji: "🌡️", valor: 57.75, cotas: 5 },
+  { id: 23, nome: "Tapete com Alarme de Soneca", emoji: "🧸", valor: 92.75, cotas: 5 },
+  { id: 24, nome: "Trocador com Wi-Fi", emoji: "🔄", valor: 64.00, cotas: 4 },
+  { id: 25, nome: "Cobertor Antiestresse", emoji: "🛏️", valor: 98.25, cotas: 6 },
+  { id: 26, nome: "Touca com Isolamento Térmico", emoji: "🎩", valor: 65.75, cotas: 5 },
+  { id: 27, nome: "Meias de Super-Herói", emoji: "🧦", valor: 67.75, cotas: 6 },
+  { id: 28, nome: "Toalha que Abraça", emoji: "🛁", valor: 88.75, cotas: 4 },
+  { id: 29, nome: "Travesseiro Sonífero", emoji: "🛏️", valor: 74.50, cotas: 6 },
+  { id: 30, nome: "Kit Talheres Gamer", emoji: "🍴", valor: 78.75, cotas: 5 },
+  { id: 31, nome: "Lençol Autolimpante", emoji: "🛏️", valor: 71.75, cotas: 6 },
+  { id: 32, nome: "Pote Térmico com Bluetooth", emoji: "🥣", valor: 92.75, cotas: 6 },
+  { id: 33, nome: "Mordedor de Arco-Íris", emoji: "🌈", valor: 82.25, cotas: 5 },
+  { id: 34, nome: "Sabonete com Aroma de Ursinho", emoji: "🧼", valor: 78.75, cotas: 5 },
+  { id: 35, nome: "Kit Spa Bebê", emoji: "🧴", valor: 58.75, cotas: 4 },
+  { id: 36, nome: "Babá Eletrônica com IA", emoji: "📹", valor: 97.75, cotas: 6 },
+  { id: 37, nome: "Cadeira Musical de Alimentação", emoji: "🎶", valor: 92.25, cotas: 4 },
+  { id: 38, nome: "Troninho com Feedback Sonoro", emoji: "🚽", valor: 63.75, cotas: 5 },
+  { id: 39, nome: "Kit Penteado Fashion Baby", emoji: "💇", valor: 83.50, cotas: 5 },
+  { id: 40, nome: "Touca para Sonhos Doces", emoji: "🎩", valor: 55.75, cotas: 4 },
+  { id: 41, nome: "Almofada que Conta Histórias", emoji: "📖", valor: 82.75, cotas: 4 },
+  { id: 42, nome: "Colchonete Inflável Mágico", emoji: "🛏️", valor: 101.25, cotas: 6 },
+  { id: 43, nome: "Carregador de Bebê Humano", emoji: "🧍", valor: 89.75, cotas: 5 },
+  { id: 44, nome: "Macacão com GPS", emoji: "🧥", valor: 101.00, cotas: 3 },
+  { id: 45, nome: "Fralda Noturna com Luz de LED", emoji: "💡", valor: 55.50, cotas: 3 },
+  { id: 46, nome: "Toalhas que Fazem Cócegas", emoji: "🛁", valor: 88.50, cotas: 5 },
+  { id: 47, nome: "Copo de Pré-Treinamento infantil", emoji: "🥛", valor: 84.25, cotas: 4 }
+];
 
     function renderizarPresentes() {
       const galeria = document.getElementById('presentes');
-      if (produtos.length === 0) return;
       galeria.innerHTML = '';
       produtos.forEach(p => {
         const div = document.createElement('div');
@@ -97,8 +125,8 @@
           <div class='emoji'>${p.emoji}</div>
           <h3>${p.nome}</h3>
           <p style='color:black;font-weight:bold'>Valor: R$ ${p.valor.toFixed(2).replace('.', ',')}</p>
-          <p>${p.cotas > 0 ? 'Cotas disponíveis: ' + p.cotas : '<span style="color:red;font-weight:bold">Produto Esgotado</span>'}</p>
-          ${p.cotas > 0 ? '<button onclick="abrirModalPagamento(' + p.id + ')">Presentear</button>' : '<button disabled>Esgotado</button>'}
+          <p>Cotas disponíveis: ${p.cotas}</p>
+          <button onclick="abrirModalPagamento(${p.id})">Presentear</button>
         `;
         galeria.appendChild(div);
       });
@@ -127,7 +155,7 @@
           <p>Caso queira levar um presente no dia, fica à sua escolha!</p>
           <p>Papai, mamãe e João agradecem o presente!</p>
 <div style='font-size:32px;'>❤️</div>
-          <button onclick='confirmarPresente(${produto.id}, this)'>Finalizar</button>
+          <button onclick='finalizarModal(${produto.id}, this)'>Finalizar</button>
         </div>`;
       document.body.appendChild(modal);
     }
@@ -144,39 +172,24 @@
       }
     }
 
-    async function confirmarPresente(id, btn) {
-      const nome = document.getElementById(`nome-${id}`).value.trim();
-      const msg = document.getElementById(`msg-${id}`).value.trim();
-      if (!nome || !msg) {
-        alert('Preencha nome e mensagem.');
-        return;
-      }
-
-      btn.disabled = true;
-      btn.textContent = 'Enviando...';
-      try {
-        const resp = await fetch('/.netlify/functions/confirmar-presente', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id, nome, mensagem: msg })
-        });
-        if (resp.ok) {
-          fecharModal(btn);
-          await carregarPresentes();
-        } else {
-          const data = await resp.json();
-          alert(data.error || 'Erro ao confirmar');
-          btn.disabled = false;
-          btn.textContent = 'Finalizar';
+async function finalizarModal(id, btn) {
+        const nome = document.getElementById(`nome-${id}`).value.trim();
+        const msg = document.getElementById(`msg-${id}`).value.trim();
+        if (!nome || !msg) {
+          alert('Preencha nome e mensagem.');
+          return;
         }
-      } catch (err) {
-        alert('Erro ao confirmar');
-        btn.disabled = false;
-        btn.textContent = 'Finalizar';
+        try {
+          await fetch('/.netlify/functions/registrar-mensagem', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nome, mensagem: msg, produto: produtos[id].nome, valor: produtos[id].valor })
+          });
+        } catch (err) {}
+        fecharModal(btn);
       }
-    }
 
-    window.addEventListener('DOMContentLoaded', carregarPresentes);
+    window.addEventListener('DOMContentLoaded', renderizarPresentes);
   function copiarChavePix(btn) {
   navigator.clipboard.writeText("06575533957")
     .then(() => {
