@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
+const { resolveDataPath } = require('./util');
 
-const file = path.resolve(__dirname, '..', '..', 'mensagens.json');
+const file = resolveDataPath('mensagens.json');
 
 exports.handler = async () => {
   try {

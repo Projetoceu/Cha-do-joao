@@ -1,10 +1,11 @@
 const fs = require('fs');
 const path = require('path');
+const { resolveDataPath } = require('./util');
 
 exports.handler = async () => {
   try {
     const data = JSON.parse(
-      fs.readFileSync(path.resolve(__dirname, '..', '..', 'controle-de-produto'), 'utf8')
+      fs.readFileSync(resolveDataPath('controle-de-produto'), 'utf8')
     );
     return {
       statusCode: 200,

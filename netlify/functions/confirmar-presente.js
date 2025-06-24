@@ -1,8 +1,9 @@
 const fs = require('fs');
 const path = require('path');
+const { resolveDataPath } = require('./util');
 
-const file = path.resolve(__dirname, '..', '..', 'controle-de-produto');
-const mensagensFile = path.resolve(__dirname, '..', '..', 'mensagens.json');
+const file = resolveDataPath('controle-de-produto');
+const mensagensFile = resolveDataPath('mensagens.json');
 
 function carregarProdutos() {
   return JSON.parse(fs.readFileSync(file, 'utf8'));
