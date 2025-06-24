@@ -128,7 +128,12 @@
           body: JSON.stringify({ id })
         });
         if (resp.ok) {
+          const index = produtos.findIndex(p => p.id === id);
+          if (index !== -1 && produtos[index].cotas > 0) {
+            produtos[index].cotas -= 1;
+          }
           fecharModal(btn);
+          renderizarPresentes();
           await carregarPresentes();
         } else {
           const data = await resp.json();
