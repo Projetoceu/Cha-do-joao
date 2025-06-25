@@ -53,18 +53,19 @@ exports.handler = async function (event) {
     salvarProdutos(produtos);
 
     const mensagens = carregarMensagens();
-    mensagens.push({
+    const registro = {
       nome,
       mensagem,
       produto: produto.nome,
       valor: produto.valor,
-      dataHora: new Date().toISOString()
-    });
+      dataHora: new Date().toISOString(),
+    };
+    mensagens.push(registro);
     salvarMensagens(mensagens);
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ success: true, produto })
+      body: JSON.stringify({ success: true, produto, registro })
     };
   } catch (err) {
     return {

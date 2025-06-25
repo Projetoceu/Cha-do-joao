@@ -38,7 +38,10 @@
         document.getElementById('mensagens').innerHTML = '<p>Erro ao carregar mensagens.</p>';
       }
     }
-    window.addEventListener('DOMContentLoaded', carregarMensagens);
+    window.addEventListener('DOMContentLoaded', () => {
+      carregarMensagens();
+      setInterval(carregarMensagens, 5000);
+    });
   </script>
 </body>
 </html>
