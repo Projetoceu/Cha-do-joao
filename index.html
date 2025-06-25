@@ -194,6 +194,9 @@ async function finalizarModal(id, btn) {
           });
         } catch (err) {}
         fecharModal(btn);
+        if (document.getElementById('area-restrita').style.display !== 'none') {
+          carregarMensagens();
+        }
       }
 
     window.addEventListener('DOMContentLoaded', renderizarPresentes);
@@ -210,15 +213,45 @@ async function finalizarModal(id, btn) {
   <input type="password" id="senha-restrita" placeholder="Senha" style="padding:5px" />
   <button onclick="acessarRestrito()">Acessar</button>
 </footer>
+<div id="area-restrita" style="display:none;margin:20px;">
+  <h2>Área Restrita</h2>
+  <div id="mensagens-area"></div>
+</div>
 <script>
+  async function carregarMensagens() {
+    try {
+      const resp = await fetch('/.netlify/functions/listar-mensagens');
+      const dados = resp.ok ? await resp.json() : [];
+      const container = document.getElementById('mensagens-area');
+      if (dados.length === 0) {
+        container.innerHTML = '<p>Nenhuma mensagem registrada.</p>';
+        return;
+      }
+      const grupos = {};
+      dados.forEach(m => {
+        grupos[m.nome] = grupos[m.nome] || [];
+        grupos[m.nome].push(m);
+      });
+      container.innerHTML = Object.entries(grupos).map(([nome, msgs]) => {
+        const itens = msgs.map(x => {
+          const data = x.dataHora ? new Date(x.dataHora).toLocaleString('pt-BR') : '';
+          return `<li><strong>${x.produto}</strong> - R$ ${Number(x.valor).toFixed(2).replace('.', ',')}<br>${data}<br>${x.mensagem}</li>`;
+        }).join('');
+        return `<h3>${nome}</h3><ul>${itens}</ul>`;
+      }).join('');
+    } catch (err) {
+      document.getElementById('mensagens-area').innerHTML = '<p>Erro ao carregar mensagens.</p>';
+    }
+  }
+
   function acessarRestrito() {
     const senha = document.getElementById('senha-restrita').value;
     if (senha === '08072010') {
-      window.location.href = 'area-restrita.html';
+      document.getElementById('area-restrita').style.display = 'block';
+      carregarMensagens();
     } else {
       alert('Senha incorreta');
     }
   }
-</script>
 </body>
 </html>
