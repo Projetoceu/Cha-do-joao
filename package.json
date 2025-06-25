@@ -4,7 +4,7 @@
   "description": "Chá do joão",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "netlify dev"
   },
   "repository": {
@@ -18,5 +18,11 @@
     "url": "https://github.com/Projetoceu/Cha-do-joao/issues"
   },
   "homepage": "https://github.com/Projetoceu/Cha-do-joao#readme",
-  "dependencies": {}
+  "devDependencies": {
+    "jest": "^30.0.3",
+    "jsdom": "^26.1.0"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  }
 }
