@@ -187,14 +187,23 @@ async function finalizarModal(id, btn) {
           return;
         }
         try {
-          await fetch('/.netlify/functions/registrar-mensagem', {
+          const resp = await fetch('/.netlify/functions/registrar-mensagem', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ nome, mensagem: msg, produto: produtos[id].nome, valor: produtos[id].valor })
           });
-        } catch (err) {}
+          if (resp.ok && document.getElementById('area-restrita').style.display !== 'none') {
+            const data = await resp.json();
+            if (data.registro) carregarMensagens();
+          }
+        } catch (err) {
+          if (document.getElementById('area-restrita').style.display !== 'none') {
+            carregarMensagens();
+          }
+        }
         fecharModal(btn);
         if (document.getElementById('area-restrita').style.display !== 'none') {
+          // garantia caso falha na resposta
           carregarMensagens();
         }
       }
@@ -249,6 +258,9 @@ async function finalizarModal(id, btn) {
     if (senha === '08072010') {
       document.getElementById('area-restrita').style.display = 'block';
       carregarMensagens();
+      if (!window._mensagensInterval) {
+        window._mensagensInterval = setInterval(carregarMensagens, 5000);
+      }
     } else {
       alert('Senha incorreta');
     }
