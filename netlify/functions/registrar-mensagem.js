@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { getWritablePath } = require('./lib/fileHelper');
+const { corsHeaders } = require('./util');
 
 const file = getWritablePath('mensagens.json');
 
@@ -17,9 +18,13 @@ function salvarMensagens(lista) {
 }
 
 exports.handler = async (event) => {
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 200, headers: corsHeaders };
+  }
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
+      headers: corsHeaders,
       body: JSON.stringify({ error: 'Método não permitido' })
     };
   }
@@ -27,7 +32,7 @@ exports.handler = async (event) => {
   try {
     const { nome, mensagem, produto, valor } = JSON.parse(event.body);
     if (!nome || !mensagem || !produto || valor === undefined) {
-      return { statusCode: 400, body: JSON.stringify({ error: 'Dados inválidos' }) };
+      return { statusCode: 400, headers: corsHeaders, body: JSON.stringify({ error: 'Dados inválidos' }) };
     }
 
     const mensagens = carregarMensagens();
@@ -40,8 +45,8 @@ exports.handler = async (event) => {
     });
     salvarMensagens(mensagens);
 
-    return { statusCode: 200, body: JSON.stringify({ sucesso: true }) };
+    return { statusCode: 200, headers: corsHeaders, body: JSON.stringify({ sucesso: true }) };
   } catch (err) {
-    return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
+    return { statusCode: 500, headers: corsHeaders, body: JSON.stringify({ error: err.message }) };
   }
 };

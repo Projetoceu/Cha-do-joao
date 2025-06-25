@@ -19,4 +19,9 @@ function resolveDataPath(name) {
   }
 }
 
-module.exports = { resolveDataPath };
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type'
+};
+
+module.exports = { resolveDataPath, corsHeaders };

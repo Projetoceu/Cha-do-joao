@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { getWritablePath } = require('./lib/fileHelper');
+const { corsHeaders } = require('./util');
 
 const file = getWritablePath('controle-de-produto');
 
@@ -13,9 +14,13 @@ function salvarProdutos(lista) {
 }
 
 exports.handler = async (event) => {
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 200, headers: corsHeaders };
+  }
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
+      headers: corsHeaders,
       body: JSON.stringify({ error: 'Método não permitido' })
     };
   }
@@ -28,6 +33,7 @@ exports.handler = async (event) => {
     if (!produto || produto.cotas <= 0) {
       return {
         statusCode: 400,
+        headers: corsHeaders,
         body: JSON.stringify({ error: 'Produto esgotado ou inválido' })
       };
     }
@@ -37,11 +43,13 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
+      headers: corsHeaders,
       body: JSON.stringify({ sucesso: true })
     };
   } catch (err) {
     return {
       statusCode: 500,
+      headers: corsHeaders,
       body: JSON.stringify({ error: err.message || 'Erro ao processar' })
     };
   }
