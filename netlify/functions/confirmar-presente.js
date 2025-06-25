@@ -53,7 +53,13 @@ exports.handler = async function (event) {
     salvarProdutos(produtos);
 
     const mensagens = carregarMensagens();
-    mensagens.push({ nome, mensagem, produto: produto.nome, valor: produto.valor });
+    mensagens.push({
+      nome,
+      mensagem,
+      produto: produto.nome,
+      valor: produto.valor,
+      dataHora: new Date().toISOString()
+    });
     salvarMensagens(mensagens);
 
     return {

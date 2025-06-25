@@ -28,7 +28,10 @@
           grupos[m.nome].push(m);
         });
         container.innerHTML = Object.entries(grupos).map(([nome, msgs]) => {
-          const itens = msgs.map(x => `<li><strong>${x.produto}</strong> - R$ ${Number(x.valor).toFixed(2).replace('.', ',')}<br>${x.mensagem}</li>`).join('');
+          const itens = msgs.map(x => {
+            const data = x.dataHora ? new Date(x.dataHora).toLocaleString('pt-BR') : '';
+            return `<li><strong>${x.produto}</strong> - R$ ${Number(x.valor).toFixed(2).replace('.', ',')}<br>${data}<br>${x.mensagem}</li>`;
+          }).join('');
           return `<h2>${nome}</h2><ul>${itens}</ul>`;
         }).join('');
       } catch (err) {

@@ -31,7 +31,13 @@ exports.handler = async (event) => {
     }
 
     const mensagens = carregarMensagens();
-    mensagens.push({ nome, mensagem, produto, valor });
+    mensagens.push({
+      nome,
+      mensagem,
+      produto,
+      valor,
+      dataHora: new Date().toISOString()
+    });
     salvarMensagens(mensagens);
 
     return { statusCode: 200, body: JSON.stringify({ sucesso: true }) };
