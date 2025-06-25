@@ -20,11 +20,18 @@
       position: absolute;
       top: 10px;
       right: 10px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       background: none;
       border: none;
-      font-size: 24px;
+      font-size: 28px;
       line-height: 1;
+      font-weight: bold;
       cursor: pointer;
+      color: #000;
     }
     @media (max-width: 768px) {
       .galeria { grid-template-columns: repeat(2, 1fr); }
@@ -110,7 +117,7 @@
       modal.className = 'modal show';
       modal.innerHTML = `
         <div class='modal-content' style='position:relative;'>
-          <button onclick='fecharModal(this)' class='modal-close' aria-label='Fechar'>&times;</button>
+          <button onclick='fecharModal(this)' class='modal-close' aria-label='Fechar'>X</button>
           <div style='font-size:64px;'>${produto.emoji}</div>
           <h2>${produto.nome}</h2>
           <p style='font-size:1.2em;color:black;font-weight:bold'>Valor: R$ ${produto.valor.toFixed(2).replace('.', ',')}</p>
