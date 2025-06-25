@@ -4,5 +4,6 @@
   node_bundler = "esbuild"
 
 [functions]
-  included_files = ["netlify/functions/**", "controle-de-produto"]
+  # Inclui o arquivo de mensagens usado pelas funções
+  included_files = ["netlify/functions/**", "controle-de-produto", "mensagens.json"]
 
