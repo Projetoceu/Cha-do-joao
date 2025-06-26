@@ -40,3 +40,8 @@ npm install -g netlify-cli  # ou use `npx netlify dev`
 O arquivo `controle-de-produto` acompanha este repositório e é usado
 pelas funções para ler e atualizar as cotas conforme os presentes são
 confirmados.
+
+Também existe a função `atualizar-cota` que permite ajustar a quantidade de
+cotas manualmente através de uma requisição POST com o `id` do produto e a
+`quantidade` a ser incrementada ou decrementada. Isso pode ser utilizado para
+corrigir o estoque diretamente em `controle-de-produto`.

@@ -42,6 +42,20 @@ test('diminuir cotas ao finalizar compra', async () => {
   expect(atualizado.cotas).toBe(produto.cotas - 1);
 });
 
+test('retornar erro quando produto está esgotado', async () => {
+  const produtos = JSON.parse(originalProdutos);
+  const esgotado = produtos.find(p => p.cotas <= 0);
+  if (!esgotado) throw new Error('Nenhum produto esgotado para testar');
+  const resp = await confirmarPresente.handler({
+    httpMethod: 'POST',
+    body: JSON.stringify({ id: esgotado.id, nome: 'Teste', mensagem: 'Falha' })
+  });
+  expect(resp.statusCode).toBe(400);
+  const final = JSON.parse(fs.readFileSync(produtosFile, 'utf8'));
+  const mesmo = final.find(p => p.id === esgotado.id);
+  expect(mesmo.cotas).toBe(esgotado.cotas);
+});
+
 test('capturar dados e enviar para area restrita', async () => {
   const produtos = JSON.parse(originalProdutos);
   const produto = produtos.find(p => p.cotas > 0);
