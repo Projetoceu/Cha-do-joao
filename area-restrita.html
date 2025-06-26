@@ -38,9 +38,30 @@
         document.getElementById('mensagens').innerHTML = '<p>Erro ao carregar mensagens.</p>';
       }
     }
-    window.addEventListener('DOMContentLoaded', () => {
-      carregarMensagens();
-      setInterval(carregarMensagens, 5000);
+
+    async function solicitarSenha() {
+      while (true) {
+        const senha = prompt('Senha de acesso:');
+        if (senha === null) return false;
+        try {
+          const resp = await fetch('/.netlify/functions/validar-senha', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ senha })
+          });
+          if (resp.ok) return true;
+        } catch (err) {}
+        alert('Senha incorreta');
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      if (await solicitarSenha()) {
+        await carregarMensagens();
+        setInterval(carregarMensagens, 5000);
+      } else {
+        document.body.innerHTML = '<p>Acesso negado.</p>';
+      }
     });
   </script>
 </body>

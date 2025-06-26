@@ -82,12 +82,22 @@ test('dados aparecem na area restrita', async () => {
 
   const html = fs.readFileSync(path.join(__dirname, '..', 'area-restrita.html'), 'utf8');
   const dom = new JSDOM(html, { runScripts: 'dangerously' });
-  dom.window.fetch = jest.fn().mockResolvedValue({
-    ok: true,
-    json: () => Promise.resolve(mensagens)
-  });
   dom.window.setInterval = () => {};
+  dom.window.prompt = jest.fn().mockReturnValue('08072010');
+  dom.window.fetch = jest.fn((url, opts) => {
+    if (url.includes('validar-senha')) {
+      const body = JSON.parse(opts.body);
+      return Promise.resolve({ ok: body.senha === '08072010' });
+    }
+    return Promise.resolve({
+      ok: true,
+      json: () => Promise.resolve(mensagens)
+    });
+  });
+
+  await dom.window.solicitarSenha();
   await dom.window.carregarMensagens();
+
   const text = dom.window.document.getElementById('mensagens').textContent;
   const dataStr = new Date(ultima.dataHora).toLocaleString('pt-BR');
   expect(text).toContain(nome);
