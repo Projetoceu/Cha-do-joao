@@ -3,6 +3,7 @@ const path = require('path');
 const listarProdutos = require('../netlify/functions/listar-produtos.js');
 const confirmarPresente = require('../netlify/functions/confirmar-presente.js');
 const listarMensagens = require('../netlify/functions/listar-mensagens.js');
+const { JSDOM } = require('jsdom');
 
 const produtosFile = path.join(__dirname, '..', 'controle-de-produto');
 const mensagensFile = path.join(__dirname, '..', 'mensagens.json');
@@ -62,4 +63,36 @@ test('capturar dados e enviar para area restrita', async () => {
   const resp = await listarMensagens.handler();
   const list = JSON.parse(resp.body);
   expect(list[list.length - 1]).toEqual(ultima);
+});
+
+test('dados aparecem na area restrita', async () => {
+  const produtos = JSON.parse(originalProdutos);
+  const produto = produtos.find(p => p.cotas > 0);
+  const nome = 'Visitante Area';
+  const mensagem = 'Tudo certo';
+
+  await confirmarPresente.handler({
+    httpMethod: 'POST',
+    body: JSON.stringify({ id: produto.id, nome, mensagem })
+  });
+
+  const listResp = await listarMensagens.handler();
+  const mensagens = JSON.parse(listResp.body);
+  const ultima = mensagens[mensagens.length - 1];
+
+  const html = fs.readFileSync(path.join(__dirname, '..', 'area-restrita.html'), 'utf8');
+  const dom = new JSDOM(html, { runScripts: 'dangerously' });
+  dom.window.fetch = jest.fn().mockResolvedValue({
+    ok: true,
+    json: () => Promise.resolve(mensagens)
+  });
+  dom.window.setInterval = () => {};
+  await dom.window.carregarMensagens();
+  const text = dom.window.document.getElementById('mensagens').textContent;
+  const dataStr = new Date(ultima.dataHora).toLocaleString('pt-BR');
+  expect(text).toContain(nome);
+  expect(text).toContain(produto.nome);
+  expect(text).toContain(produto.valor.toFixed(2).replace('.', ','));
+  expect(text).toContain(mensagem);
+  expect(text).toContain(dataStr);
 });
