@@ -5,7 +5,7 @@ const confirmarPresente = require('../netlify/functions/confirmar-presente.js');
 const listarMensagens = require('../netlify/functions/listar-mensagens.js');
 const { JSDOM } = require('jsdom');
 
-const produtosFile = path.join(__dirname, '..', 'controle-de-produto');
+const produtosFile = path.join(__dirname, '..', 'controle-de-produto.json');
 const mensagensFile = path.join(__dirname, '..', 'mensagens.json');
 
 let originalProdutos;

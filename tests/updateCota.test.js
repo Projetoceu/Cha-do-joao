@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const atualizarCota = require('../netlify/functions/atualizar-cota.js');
 
-const produtosFile = path.join(__dirname, '..', 'controle-de-produto');
+const produtosFile = path.join(__dirname, '..', 'controle-de-produto.json');
 
 let originalProdutos;
 

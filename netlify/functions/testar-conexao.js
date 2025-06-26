@@ -4,7 +4,7 @@ const { getWritablePath } = require('./lib/fileHelper');
 
 exports.handler = async () => {
   try {
-    const file = getWritablePath('controle-de-produto');
+    const file = getWritablePath('controle-de-produto.json');
     const data = JSON.parse(fs.readFileSync(file, 'utf8'));
     return {
       statusCode: 200,
