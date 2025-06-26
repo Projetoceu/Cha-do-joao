@@ -161,10 +161,9 @@ async function finalizarModal(id, btn) {
           });
           if (resp.ok) {
             await resp.json();
-            if (produtos[id].cotas > 0) {
-              produtos[id].cotas -= 1;
-              renderizarPresentes();
-            }
+            // Recarrega a lista do servidor para garantir que a quantidade
+            // esteja atualizada para todos que acessarem o site
+            await carregarPresentes();
           } else {
             const data = await resp.json();
             alert(data.error || 'Erro ao confirmar');
