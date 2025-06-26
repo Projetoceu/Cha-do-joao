@@ -159,9 +159,17 @@
         return;
       }
 
+      const produto = produtos.find(p => p.id === id);
+
       btn.disabled = true;
       btn.textContent = 'Enviando...';
       try {
+        await fetch('/.netlify/functions/registrar-mensagem', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nome, mensagem: msg, produto: produto.nome, valor: produto.valor })
+        });
+
         const resp = await fetch('/.netlify/functions/confirmar-presente', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
