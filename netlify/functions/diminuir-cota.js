@@ -32,7 +32,8 @@ exports.handler = async (event) => {
       };
     }
 
-    produto.cotas -= 1;
+    // Evita valores negativos de cota
+    produto.cotas = Math.max(produto.cotas - 1, 0);
     salvarProdutos(produtos);
 
     return {

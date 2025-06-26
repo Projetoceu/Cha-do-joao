@@ -49,7 +49,8 @@ exports.handler = async function (event) {
       return { statusCode: 400, body: JSON.stringify({ error: 'Dados inválidos' }) };
     }
 
-    produto.cotas -= 1;
+    // Garante que a cota nunca fique negativa
+    produto.cotas = Math.max(produto.cotas - 1, 0);
     salvarProdutos(produtos);
 
     const mensagens = carregarMensagens();
