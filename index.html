@@ -187,16 +187,23 @@ async function finalizarModal(id, btn) {
           return;
         }
         try {
-          const resp = await fetch('/.netlify/functions/registrar-mensagem', {
+          const resp = await fetch('/.netlify/functions/confirmar-presente', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ nome, mensagem: msg, produto: produtos[id].nome, valor: produtos[id].valor })
+            body: JSON.stringify({ id, nome, mensagem: msg })
           });
           if (resp.ok) {
             await resp.json();
+            if (produtos[id].cotas > 0) {
+              produtos[id].cotas -= 1;
+              renderizarPresentes();
+            }
+          } else {
+            const data = await resp.json();
+            alert(data.error || 'Erro ao confirmar');
           }
         } catch (err) {
-          // ignore
+          alert('Erro ao confirmar');
         }
         fecharModal(btn);
       }
