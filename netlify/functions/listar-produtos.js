@@ -2,10 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const { getWritablePath } = require('./lib/fileHelper');
 
-// Retorna a lista de produtos do arquivo controle-de-produto
+// Retorna a lista de produtos do arquivo controle-de-produto.json
 exports.handler = async () => {
   try {
-    const file = getWritablePath('controle-de-produto');
+    const file = getWritablePath('controle-de-produto.json');
     const data = JSON.parse(fs.readFileSync(file, 'utf8'));
     return {
       statusCode: 200,

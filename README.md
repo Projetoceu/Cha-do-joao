@@ -1,7 +1,7 @@
 # Chá do João
 
 Este projeto contém a página do "Chá do João Victor" e algumas funções serverless
-que manipulam um arquivo `controle-de-produto`. Nesse arquivo ficam
+que manipulam um arquivo `controle-de-produto.json`. Nesse arquivo ficam
 registrados o nome, valor, emoji e a quantidade de cotas disponíveis de cada
 presente.
 
@@ -37,6 +37,6 @@ npm install -g netlify-cli  # ou use `npx netlify dev`
    npx http-server .
    ```
 
-O arquivo `controle-de-produto` acompanha este repositório e é usado
+O arquivo `controle-de-produto.json` acompanha este repositório e é usado
 pelas funções para ler e atualizar as cotas conforme os presentes são
 confirmados.

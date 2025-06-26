@@ -5,5 +5,5 @@
 
 [functions]
   # Inclui o arquivo de mensagens usado pelas funções
-  included_files = ["netlify/functions/**", "controle-de-produto", "mensagens.json"]
+  included_files = ["netlify/functions/**", "controle-de-produto.json", "mensagens.json"]
 
