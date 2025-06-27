@@ -31,7 +31,6 @@ exports.handler = async (event) => {
       return { statusCode: 400, body: JSON.stringify({ error: 'Dados inválidos' }) };
     }
 
-    const mensagens = await carregarMensagens();
     const registro = {
       nome,
       mensagem,
@@ -39,17 +38,20 @@ exports.handler = async (event) => {
       valor,
       dataHora: new Date().toISOString(),
     };
-    mensagens.push(registro);
-    await salvarMensagens(mensagens);
+
     if (API_URL) {
       const envio = { ...registro };
       envio['data hora'] = envio.dataHora;
       delete envio.dataHora;
-      fetch(API_URL, {
+      await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(envio)
-      }).catch(() => {});
+      });
+    } else {
+      const mensagens = await carregarMensagens();
+      mensagens.push(registro);
+      await salvarMensagens(mensagens);
     }
 
     return { statusCode: 200, body: JSON.stringify({ sucesso: true, registro }) };

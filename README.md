@@ -40,7 +40,8 @@ As funções obtêm os produtos diretamente de uma planilha no Google Sheets.
 Caso deseje trabalhar offline é possível gerar um arquivo `controle-de-produto.json`
 executando `npm run importar-planilha`. Para persistir mensagens e sincronizar a
 lista de presentes com a planilha, defina duas variáveis de ambiente e, opcionalmente,
-indique a URL pública do CSV:
+indique a URL pública do CSV. Quando `API_URL` estiver configurada as mensagens
+serão registradas **exclusivamente** na aba **Mensagens** da planilha:
 
 - `API_URL` com a URL do seu Apps Script (ex.: `https://script.google.com/.../exec`)
 - `SENHA_RESTRITA` com a senha de acesso à área restrita.
