@@ -54,12 +54,14 @@ exports.handler = async function (event) {
     produto.cotas = Math.max(produto.cotas - 1, 0);
     await salvarProdutos(produtos);
 
+    const brDate = new Date().toLocaleString('sv-SE', { timeZone: 'America/Sao_Paulo' })
+      .replace(' ', 'T') + '-03:00';
     const registro = {
       nome,
       mensagem,
       produto: produto.nome,
       valor: produto.valor,
-      dataHora: new Date().toISOString(),
+      dataHora: brDate,
     };
 
     if (API_URL) {
