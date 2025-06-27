@@ -40,10 +40,13 @@ npm install -g netlify-cli  # ou use `npx netlify dev`
 O arquivo `controle-de-produto.json` acompanha este repositório e é usado
 pelas funções para ler e atualizar as cotas conforme os presentes são
 confirmados. Para persistir mensagens e sincronizar a lista de presentes
-com uma planilha do Google Sheets, defina duas variáveis de ambiente:
+com uma planilha do Google Sheets, defina duas variáveis de ambiente e
+opcionalmente indique a URL pública da planilha:
 
 - `API_URL` com a URL do seu Apps Script (ex.: `https://script.google.com/.../exec`)
 - `SENHA_RESTRITA` com a senha de acesso à área restrita.
+- `SHEET_CSV_URL` com o link CSV publicado (ex.:
+  `https://docs.google.com/.../pub?output=csv`).
 
 Em ambientes de produção (ou ao rodar `netlify dev`) exporte essas variáveis.
 Nos testes automatizados elas podem ser definidas temporariamente antes de
@@ -60,3 +63,12 @@ node scripts/exportar-csv.js
 
 O arquivo será criado no diretório raiz do projeto e pode ser
 importado em qualquer planilha.
+
+## Importando produtos da planilha
+
+Para atualizar `controle-de-produto.json` com os dados da planilha
+publicada, execute:
+
+```bash
+node scripts/importar-planilha.js
+```
