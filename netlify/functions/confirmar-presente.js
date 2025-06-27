@@ -35,11 +35,25 @@ exports.handler = async function (event) {
   }
 
   try {
-    const { id, nome, mensagem } = JSON.parse(event.body);
+    const {
+      id,
+      nome,
+      mensagem,
+      produto: produtoNome,
+      valor: valorInformado,
+    } = JSON.parse(event.body);
+
     const produtos = await carregarProdutos();
     const produto = produtos.find(p => p.id === id);
 
-    if (!produto || produto.cotas <= 0) {
+    if (!produto && (produtoNome === undefined || valorInformado === undefined)) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: 'Produto inválido' }),
+      };
+    }
+
+    if (produto && produto.cotas <= 0) {
       return {
         statusCode: 400,
         body: JSON.stringify({ error: 'Produto esgotado ou inválido' }),
@@ -50,17 +64,22 @@ exports.handler = async function (event) {
       return { statusCode: 400, body: JSON.stringify({ error: 'Dados inválidos' }) };
     }
 
-    // Garante que a cota nunca fique negativa
-    produto.cotas = Math.max(produto.cotas - 1, 0);
-    await salvarProdutos(produtos);
+    let nomeProduto = produto ? produto.nome : produtoNome;
+    let valorProduto = produto ? produto.valor : valorInformado;
+
+    if (produto) {
+      // Garante que a cota nunca fique negativa
+      produto.cotas = Math.max(produto.cotas - 1, 0);
+      await salvarProdutos(produtos);
+    }
 
     const brDate = new Date().toLocaleString('sv-SE', { timeZone: 'America/Sao_Paulo' })
       .replace(' ', 'T') + '-03:00';
     const registro = {
       nome,
       mensagem,
-      produto: produto.nome,
-      valor: produto.valor,
+      produto: nomeProduto,
+      valor: valorProduto,
       dataHora: brDate,
     };
 
