@@ -33,22 +33,38 @@
       cursor: pointer;
       color: #000;
     }
+    .lateral-emojis {
+      position: fixed;
+      top: 150px;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+      font-size: 28px;
+      z-index: 999;
+      pointer-events: none;
+    }
+    .lateral-emojis.esquerda { left: 0; }
+    .lateral-emojis.direita { right: 0; }
     @media (max-width: 768px) {
       .galeria { grid-template-columns: repeat(2, 1fr); }
       .container { padding: 10px; }
       #titulo { font-size: 2em; }
+      .lateral-emojis { display: none; }
     }
   </style>
 <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="lateral-emojis esquerda" style="position: fixed; top: 150px; left: 0; bottom: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 8px; font-size: 28px; z-index: 999; pointer-events: none;">
+  <div class="lateral-emojis esquerda">
    <span><div></div> </span><span><div></div></span> <span>🐵</span><span>🦊</span><span>🦉</span><span>🦒</span><span>🦝</span>
     <span>🦁</span><span>🐯</span><span>🐘</span><span>🐸</span><span>🐢</span>
     <span>🦥</span><span>🦔</span><span>🦧</span><span>🦛</span><span>🦓</span>
     <span>🦍</span><span>🦨</span><span>🦦</span><span>🦣</span><span>🪲</span>
   </div>
-  <div class="lateral-emojis direita" style="position: fixed; top: 150px; right: 0; bottom: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 8px; font-size: 28px; z-index: 999; pointer-events: none;">
+  <div class="lateral-emojis direita">
     <span><div></div> </span><span><div></div></span><span>🪲</span><span>🦣</span><span>🦦</span><span>🦨</span><span>🦍</span>
     <span>🦓</span><span>🦛</span><span>🦧</span><span>🦔</span><span>🦥</span>
     <span>🐢</span><span>🐸</span><span>🐘</span><span>🐯</span><span>🦁</span>
