@@ -13,11 +13,17 @@
   <h1>Área Restrita</h1>
   <div id="mensagens"></div>
   <script>
-    function solicitarSenha() {
-      if (location.protocol !== 'about:' && typeof window.prompt === 'function') {
-        return prompt('Digite a senha de acesso:');
+    async function solicitarSenha() {
+      if (location.protocol === 'about:') {
+        return true;
       }
-      return '08072010';
+      const resp = await fetch('/.netlify/functions/obter-senha');
+      const senhaCorreta = resp.ok ? (await resp.text()).trim() : '';
+      if (typeof window.prompt === 'function') {
+        const entrada = prompt('Digite a senha de acesso:');
+        return entrada === senhaCorreta;
+      }
+      return true;
     }
 
     async function carregarMensagens() {
@@ -34,20 +40,35 @@
           grupos[m.nome] = grupos[m.nome] || [];
           grupos[m.nome].push(m);
         });
-        container.innerHTML = Object.entries(grupos).map(([nome, msgs]) => {
-          const itens = msgs.map(x => {
-            const data = x.dataHora ? new Date(x.dataHora).toLocaleString('pt-BR') : '';
-            return `<li><strong>${x.produto}</strong> - R$ ${Number(x.valor).toFixed(2).replace('.', ',')}<br>${data}<br>${x.mensagem}</li>`;
-          }).join('');
-          return `<h2>${nome}</h2><ul>${itens}</ul>`;
-        }).join('');
+        container.textContent = '';
+        Object.entries(grupos).forEach(([nome, msgs]) => {
+          const titulo = document.createElement('h2');
+          titulo.textContent = nome;
+          container.appendChild(titulo);
+          const ul = document.createElement('ul');
+          msgs.forEach(x => {
+            const li = document.createElement('li');
+            const strong = document.createElement('strong');
+            strong.textContent = x.produto;
+            li.appendChild(strong);
+            li.appendChild(document.createTextNode(` - R$ ${Number(x.valor).toFixed(2).replace('.', ',')}`));
+            if (x.dataHora) {
+              li.appendChild(document.createElement('br'));
+              li.appendChild(document.createTextNode(new Date(x.dataHora).toLocaleString('pt-BR')));
+            }
+            li.appendChild(document.createElement('br'));
+            li.appendChild(document.createTextNode(x.mensagem));
+            ul.appendChild(li);
+          });
+          container.appendChild(ul);
+        });
       } catch (err) {
         document.getElementById('mensagens').innerHTML = '<p>Erro ao carregar mensagens.</p>';
       }
     }
-    window.addEventListener('DOMContentLoaded', () => {
-      const senha = solicitarSenha();
-      if (senha !== '08072010') {
+    window.addEventListener('DOMContentLoaded', async () => {
+      const ok = await solicitarSenha();
+      if (!ok) {
         document.body.innerHTML = '<h1>Acesso negado</h1>';
         return;
       }

@@ -1,28 +1,30 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require('fs').promises;
 const { getWritablePath } = require('./lib/fileHelper');
+const API_URL = process.env.API_URL;
 
 const file = getWritablePath('controle-de-produto.json');
 const mensagensFile = getWritablePath('mensagens.json');
 
-function carregarProdutos() {
-  return JSON.parse(fs.readFileSync(file, 'utf8'));
+async function carregarProdutos() {
+  const data = await fs.readFile(file, 'utf8');
+  return JSON.parse(data);
 }
 
-function salvarProdutos(lista) {
-  fs.writeFileSync(file, JSON.stringify(lista, null, 2));
+async function salvarProdutos(lista) {
+  await fs.writeFile(file, JSON.stringify(lista, null, 2));
 }
 
-function carregarMensagens() {
+async function carregarMensagens() {
   try {
-    return JSON.parse(fs.readFileSync(mensagensFile, 'utf8'));
-  } catch (err) {
+    const data = await fs.readFile(mensagensFile, 'utf8');
+    return JSON.parse(data);
+  } catch {
     return [];
   }
 }
 
-function salvarMensagens(lista) {
-  fs.writeFileSync(mensagensFile, JSON.stringify(lista, null, 2));
+async function salvarMensagens(lista) {
+  await fs.writeFile(mensagensFile, JSON.stringify(lista, null, 2));
 }
 
 exports.handler = async function (event) {
@@ -35,7 +37,7 @@ exports.handler = async function (event) {
 
   try {
     const { id, nome, mensagem } = JSON.parse(event.body);
-    const produtos = carregarProdutos();
+    const produtos = await carregarProdutos();
     const produto = produtos.find(p => p.id === id);
 
     if (!produto || produto.cotas <= 0) {
@@ -51,9 +53,9 @@ exports.handler = async function (event) {
 
     // Garante que a cota nunca fique negativa
     produto.cotas = Math.max(produto.cotas - 1, 0);
-    salvarProdutos(produtos);
+    await salvarProdutos(produtos);
 
-    const mensagens = carregarMensagens();
+    const mensagens = await carregarMensagens();
     const registro = {
       nome,
       mensagem,
@@ -62,7 +64,14 @@ exports.handler = async function (event) {
       dataHora: new Date().toISOString(),
     };
     mensagens.push(registro);
-    salvarMensagens(mensagens);
+    await salvarMensagens(mensagens);
+    if (API_URL) {
+      fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(registro)
+      }).catch(() => {});
+    }
 
     return {
       statusCode: 200,

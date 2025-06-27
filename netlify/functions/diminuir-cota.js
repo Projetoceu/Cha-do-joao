@@ -1,15 +1,15 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require('fs').promises;
 const { getWritablePath } = require('./lib/fileHelper');
 
 const file = getWritablePath('controle-de-produto.json');
 
-function carregarProdutos() {
-  return JSON.parse(fs.readFileSync(file, 'utf8'));
+async function carregarProdutos() {
+  const data = await fs.readFile(file, 'utf8');
+  return JSON.parse(data);
 }
 
-function salvarProdutos(lista) {
-  fs.writeFileSync(file, JSON.stringify(lista, null, 2));
+async function salvarProdutos(lista) {
+  await fs.writeFile(file, JSON.stringify(lista, null, 2));
 }
 
 exports.handler = async (event) => {
@@ -22,7 +22,7 @@ exports.handler = async (event) => {
 
   try {
     const { id } = JSON.parse(event.body);
-    const produtos = carregarProdutos();
+    const produtos = await carregarProdutos();
     const produto = produtos.find(p => p.id === id);
 
     if (!produto || produto.cotas <= 0) {
@@ -34,7 +34,7 @@ exports.handler = async (event) => {
 
     // Evita valores negativos de cota
     produto.cotas = Math.max(produto.cotas - 1, 0);
-    salvarProdutos(produtos);
+    await salvarProdutos(produtos);
 
     return {
       statusCode: 200,
