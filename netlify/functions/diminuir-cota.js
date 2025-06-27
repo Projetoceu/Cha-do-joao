@@ -1,15 +1,12 @@
 const fs = require('fs').promises;
-const { getWritablePath } = require('./lib/fileHelper');
-
-const file = getWritablePath('controle-de-produto.json');
+const { obterListaProdutos, salvarListaProdutos } = require('./lib/produtos');
 
 async function carregarProdutos() {
-  const data = await fs.readFile(file, 'utf8');
-  return JSON.parse(data);
+  return await obterListaProdutos();
 }
 
 async function salvarProdutos(lista) {
-  await fs.writeFile(file, JSON.stringify(lista, null, 2));
+  await salvarListaProdutos(lista);
 }
 
 exports.handler = async (event) => {
