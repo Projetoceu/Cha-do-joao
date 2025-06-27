@@ -31,12 +31,14 @@ exports.handler = async (event) => {
       return { statusCode: 400, body: JSON.stringify({ error: 'Dados inválidos' }) };
     }
 
+    const brDate = new Date().toLocaleString('sv-SE', { timeZone: 'America/Sao_Paulo' })
+      .replace(' ', 'T') + '-03:00';
     const registro = {
       nome,
       mensagem,
       produto,
       valor,
-      dataHora: new Date().toISOString(),
+      dataHora: brDate,
     };
 
     if (API_URL) {

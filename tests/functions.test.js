@@ -98,7 +98,9 @@ test('dados aparecem na area restrita', async () => {
   dom.window.setInterval = () => {};
   await dom.window.carregarMensagens();
   const text = dom.window.document.getElementById('mensagens').textContent;
-  const dataStr = new Date(ultima.dataHora).toLocaleString('pt-BR');
+  const dataStr = new Date(ultima.dataHora).toLocaleString('pt-BR', {
+    timeZone: 'America/Sao_Paulo',
+  });
   expect(text).toContain(nome);
   expect(text).toContain(produto.nome);
   expect(text).toContain(produto.valor.toFixed(2).replace('.', ','));

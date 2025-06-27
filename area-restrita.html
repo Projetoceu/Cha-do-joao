@@ -54,7 +54,9 @@
             li.appendChild(document.createTextNode(` - R$ ${Number(x.valor).toFixed(2).replace('.', ',')}`));
             if (x.dataHora) {
               li.appendChild(document.createElement('br'));
-              li.appendChild(document.createTextNode(new Date(x.dataHora).toLocaleString('pt-BR')));
+              li.appendChild(document.createTextNode(
+                new Date(x.dataHora).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })
+              ));
             }
             li.appendChild(document.createElement('br'));
             li.appendChild(document.createTextNode(x.mensagem));
