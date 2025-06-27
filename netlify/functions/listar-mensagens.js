@@ -11,6 +11,12 @@ exports.handler = async () => {
         const resp = await fetch(`${API_URL}?lista=mensagens`);
         if (resp.ok) {
           const data = await resp.json();
+          data.forEach(m => {
+            if (m['data hora'] && !m.dataHora) {
+              m.dataHora = m['data hora'];
+              delete m['data hora'];
+            }
+          });
           return { statusCode: 200, body: JSON.stringify(data) };
         }
       } catch (err) {
