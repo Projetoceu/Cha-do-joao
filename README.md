@@ -1,9 +1,8 @@
 # Chá do João
 
 Este projeto contém a página do "Chá do João Victor" e algumas funções serverless
-que manipulam um arquivo `controle-de-produto.json`. Nesse arquivo ficam
-registrados o nome, valor, emoji e a quantidade de cotas disponíveis de cada
-presente.
+que consultam uma planilha para obter a lista de presentes. Nela ficam registrados
+o nome, valor, emoji e a quantidade de cotas disponíveis de cada item.
 
 ## Requisitos
 
@@ -29,7 +28,7 @@ npm install -g netlify-cli  # ou use `npx netlify dev`
    npm start
    ```
 
-   Acesse `http://localhost:8888/indexV2.html` no navegador.
+   Acesse `http://localhost:8888/index.html` no navegador.
 
 3. Caso queira apenas visualizar o HTML estático, rode um servidor simples:
 
@@ -37,11 +36,11 @@ npm install -g netlify-cli  # ou use `npx netlify dev`
    npx http-server .
    ```
 
-O arquivo `controle-de-produto.json` acompanha este repositório e é usado
-pelas funções para ler e atualizar as cotas conforme os presentes são
-confirmados. Para persistir mensagens e sincronizar a lista de presentes
-com uma planilha do Google Sheets, defina duas variáveis de ambiente e
-opcionalmente indique a URL pública da planilha:
+As funções obtêm os produtos diretamente de uma planilha no Google Sheets.
+Caso deseje trabalhar offline é possível gerar um arquivo `controle-de-produto.json`
+executando `npm run importar-planilha`. Para persistir mensagens e sincronizar a
+lista de presentes com a planilha, defina duas variáveis de ambiente e, opcionalmente,
+indique a URL pública do CSV:
 
 - `API_URL` com a URL do seu Apps Script (ex.: `https://script.google.com/.../exec`)
 - `SENHA_RESTRITA` com a senha de acesso à área restrita.
@@ -51,18 +50,6 @@ opcionalmente indique a URL pública da planilha:
 Em ambientes de produção (ou ao rodar `netlify dev`) exporte essas variáveis.
 Nos testes automatizados elas podem ser definidas temporariamente antes de
 executar `npm test`.
-
-## Exportando produtos para CSV
-
-Para gerar um arquivo `produtos.csv` com a lista atual de presentes,
-execute:
-
-```bash
-node scripts/exportar-csv.js
-```
-
-O arquivo será criado no diretório raiz do projeto e pode ser
-importado em qualquer planilha.
 
 ## Importando produtos da planilha
 

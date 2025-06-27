@@ -1,21 +1,28 @@
 const fs = require('fs');
 const path = require('path');
-const atualizarCota = require('../netlify/functions/atualizar-cota.js');
+let atualizarCota;
 
 const produtosFile = path.join(__dirname, '..', 'controle-de-produto.json');
 
-let originalProdutos;
+const sampleProdutos = [
+  { id: 0, nome: 'Produto A', emoji: '🅰️', valor: 10, cotas: 1 },
+  { id: 1, nome: 'Produto B', emoji: '🅱️', valor: 20, cotas: 0 },
+  { id: 2, nome: 'Produto C', emoji: '🆑', valor: 30, cotas: 3 }
+];
 
 beforeEach(() => {
-  originalProdutos = fs.readFileSync(produtosFile, 'utf8');
+  fs.writeFileSync(produtosFile, JSON.stringify(sampleProdutos, null, 2));
+  jest.resetModules();
+  atualizarCota = require('../netlify/functions/atualizar-cota.js');
 });
 
 afterEach(() => {
-  fs.writeFileSync(produtosFile, originalProdutos);
+  fs.unlinkSync(produtosFile);
+  jest.resetModules();
 });
 
 test('atualizar cotas de um produto', async () => {
-  const produtos = JSON.parse(originalProdutos);
+  const produtos = sampleProdutos;
   const produto = produtos[0];
   const resp = await atualizarCota.handler({
     httpMethod: 'POST',
