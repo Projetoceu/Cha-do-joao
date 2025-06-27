@@ -66,10 +66,13 @@ exports.handler = async function (event) {
     mensagens.push(registro);
     await salvarMensagens(mensagens);
     if (API_URL) {
+      const envio = { ...registro };
+      envio['data hora'] = envio.dataHora;
+      delete envio.dataHora;
       fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(registro)
+        body: JSON.stringify(envio)
       }).catch(() => {});
     }
 
