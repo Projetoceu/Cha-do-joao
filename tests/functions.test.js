@@ -1,35 +1,44 @@
 const fs = require('fs');
 const path = require('path');
-const listarProdutos = require('../netlify/functions/listar-produtos.js');
-const confirmarPresente = require('../netlify/functions/confirmar-presente.js');
-const listarMensagens = require('../netlify/functions/listar-mensagens.js');
 const { JSDOM } = require('jsdom');
 
 const produtosFile = path.join(__dirname, '..', 'controle-de-produto.json');
 const mensagensFile = path.join(__dirname, '..', 'mensagens.json');
 
-let originalProdutos;
-let originalMensagens;
+let listarProdutos;
+let confirmarPresente;
+let listarMensagens;
+
+const sampleProdutos = [
+  { id: 0, nome: 'Produto A', emoji: '🅰️', valor: 10, cotas: 1 },
+  { id: 1, nome: 'Produto B', emoji: '🅱️', valor: 20, cotas: 0 },
+  { id: 2, nome: 'Produto C', emoji: '🆑', valor: 30, cotas: 3 }
+];
 
 beforeEach(() => {
-  originalProdutos = fs.readFileSync(produtosFile, 'utf8');
-  originalMensagens = fs.readFileSync(mensagensFile, 'utf8');
+  fs.writeFileSync(produtosFile, JSON.stringify(sampleProdutos, null, 2));
+  fs.writeFileSync(mensagensFile, '[]');
+  jest.resetModules();
+  listarProdutos = require('../netlify/functions/listar-produtos.js');
+  confirmarPresente = require('../netlify/functions/confirmar-presente.js');
+  listarMensagens = require('../netlify/functions/listar-mensagens.js');
 });
 
 afterEach(() => {
-  fs.writeFileSync(produtosFile, originalProdutos);
-  fs.writeFileSync(mensagensFile, originalMensagens);
+  fs.unlinkSync(produtosFile);
+  fs.unlinkSync(mensagensFile);
+  jest.resetModules();
 });
 
 test('listar produtos', async () => {
   const resp = await listarProdutos.handler();
   expect(resp.statusCode).toBe(200);
   const data = JSON.parse(resp.body);
-  expect(data).toEqual(JSON.parse(originalProdutos));
+  expect(data).toEqual(sampleProdutos);
 });
 
 test('diminuir cotas ao finalizar compra', async () => {
-  const produtos = JSON.parse(originalProdutos);
+  const produtos = sampleProdutos;
   const produto = produtos.find(p => p.cotas > 0);
   if (!produto) throw new Error('Nenhum produto com cotas disponíveis');
   const resp = await confirmarPresente.handler({
@@ -43,7 +52,7 @@ test('diminuir cotas ao finalizar compra', async () => {
 });
 
 test('capturar dados e enviar para area restrita', async () => {
-  const produtos = JSON.parse(originalProdutos);
+  const produtos = sampleProdutos;
   const produto = produtos.find(p => p.cotas > 0);
   const nome = 'Visitante';
   const mensagem = 'Parabens!';
@@ -66,7 +75,7 @@ test('capturar dados e enviar para area restrita', async () => {
 });
 
 test('dados aparecem na area restrita', async () => {
-  const produtos = JSON.parse(originalProdutos);
+  const produtos = sampleProdutos;
   const produto = produtos.find(p => p.cotas > 0);
   const nome = 'Visitante Area';
   const mensagem = 'Tudo certo';
