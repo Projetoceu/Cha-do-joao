@@ -39,8 +39,9 @@ npm install -g netlify-cli  # ou use `npx netlify dev`
 
 O arquivo `controle-de-produto.json` acompanha este repositório e é usado
 pelas funções para ler e atualizar as cotas conforme os presentes são
-confirmados. Para persistir mensagens e sincronizar a lista de presentes
-com uma planilha do Google Sheets, defina duas variáveis de ambiente:
+confirmados. Também é possível integrar a aplicação com a planilha
+compartilhada no Google Sheets. Para habilitar essa integração defina as
+seguintes variáveis de ambiente:
 
 - `API_URL` com a URL do seu Apps Script (ex.: `https://script.google.com/.../exec`)
 - `SENHA_RESTRITA` com a senha de acesso à área restrita.
@@ -48,3 +49,14 @@ com uma planilha do Google Sheets, defina duas variáveis de ambiente:
 Em ambientes de produção (ou ao rodar `netlify dev`) exporte essas variáveis.
 Nos testes automatizados elas podem ser definidas temporariamente antes de
 executar `npm test`.
+
+### Estrutura da planilha
+
+A planilha precisa de duas abas:
+
+1. **Produtos** com as colunas `id`, `produto`, `valor` e `cotas`.
+2. **Mensagens** com as colunas `nome`, `produto`, `valor`, `mensagem` e `dataHora`.
+
+Crie um projeto em **Extensões → Apps Script**, cole o código de exemplo e
+implante-o como "Aplicativo da Web". A URL gerada deve ser informada em
+`API_URL`.

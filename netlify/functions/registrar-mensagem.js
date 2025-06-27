@@ -42,11 +42,15 @@ exports.handler = async (event) => {
     mensagens.push(registro);
     await salvarMensagens(mensagens);
     if (API_URL) {
-      fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(registro)
-      }).catch(() => {});
+      try {
+        await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(registro)
+        });
+      } catch (err) {
+        console.error('Erro ao enviar para planilha:', err);
+      }
     }
 
     return { statusCode: 200, body: JSON.stringify({ sucesso: true, registro }) };
