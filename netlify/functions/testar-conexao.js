@@ -1,10 +1,8 @@
-const fs = require('fs').promises;
-const { getWritablePath } = require('./lib/fileHelper');
+const { obterListaProdutos } = require('./lib/produtos');
 
 exports.handler = async () => {
   try {
-    const file = getWritablePath('controle-de-produto.json');
-    const data = JSON.parse(await fs.readFile(file, 'utf8'));
+    const data = await obterListaProdutos();
     return {
       statusCode: 200,
       body: JSON.stringify({ sucesso: true, dados: data.slice(0, 1) }),
