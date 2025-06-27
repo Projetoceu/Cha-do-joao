@@ -54,7 +54,6 @@ exports.handler = async function (event) {
     produto.cotas = Math.max(produto.cotas - 1, 0);
     await salvarProdutos(produtos);
 
-    const mensagens = await carregarMensagens();
     const registro = {
       nome,
       mensagem,
@@ -62,17 +61,20 @@ exports.handler = async function (event) {
       valor: produto.valor,
       dataHora: new Date().toISOString(),
     };
-    mensagens.push(registro);
-    await salvarMensagens(mensagens);
+
     if (API_URL) {
       const envio = { ...registro };
       envio['data hora'] = envio.dataHora;
       delete envio.dataHora;
-      fetch(API_URL, {
+      await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(envio)
-      }).catch(() => {});
+      });
+    } else {
+      const mensagens = await carregarMensagens();
+      mensagens.push(registro);
+      await salvarMensagens(mensagens);
     }
 
     return {
