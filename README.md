@@ -48,3 +48,15 @@ com uma planilha do Google Sheets, defina duas variáveis de ambiente:
 Em ambientes de produção (ou ao rodar `netlify dev`) exporte essas variáveis.
 Nos testes automatizados elas podem ser definidas temporariamente antes de
 executar `npm test`.
+
+## Exportando produtos para CSV
+
+Para gerar um arquivo `produtos.csv` com a lista atual de presentes,
+execute:
+
+```bash
+node scripts/exportar-csv.js
+```
+
+O arquivo será criado no diretório raiz do projeto e pode ser
+importado em qualquer planilha.
