@@ -37,16 +37,19 @@ npm install -g netlify-cli  # ou use `npx netlify dev`
    ```
 
 As funções obtêm os produtos diretamente de uma planilha no Google Sheets.
-Caso deseje trabalhar offline é possível gerar um arquivo `controle-de-produto.json`
-executando `npm run importar-planilha`. Para persistir mensagens e sincronizar a
-lista de presentes com a planilha, defina duas variáveis de ambiente e, opcionalmente,
-indique a URL pública do CSV. Quando `API_URL` estiver configurada as mensagens
-serão registradas **exclusivamente** na aba **Mensagens** da planilha:
+A URL do Apps Script que expõe esses dados já está configurada por padrão no
+código das funções, portanto normalmente não é necessário definir `API_URL` em
+ambientes de produção. Caso deseje trabalhar offline é possível gerar um arquivo
+`controle-de-produto.json` executando `npm run importar-planilha`. Para
+persistir mensagens e sincronizar a lista de presentes com a planilha, defina
+duas variáveis de ambiente e, opcionalmente, indique a URL pública do CSV.
+Quando `API_URL` estiver configurada as mensagens serão registradas
+**exclusivamente** na aba **Mensagens** da planilha:
 
 - `API_URL` com a URL do seu Apps Script (ex.: `https://script.google.com/.../exec`)
 - `SENHA_RESTRITA` com a senha de acesso à área restrita.
 - `SHEET_CSV_URL` com o link CSV publicado (ex.:
-  `https://docs.google.com/.../pub?output=csv`).
+  `https://script.google.com/.../exec?lista=produtos&format=csv`).
 
 Em ambientes de produção (ou ao rodar `netlify dev`) exporte essas variáveis.
 Nos testes automatizados elas podem ser definidas temporariamente antes de

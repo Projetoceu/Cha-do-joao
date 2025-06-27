@@ -18,7 +18,11 @@ function getWritablePath(filename) {
     return repoPath;
   } catch {
     if (!fs.existsSync(tmpPath)) {
-      fs.copyFileSync(repoPath, tmpPath);
+      if (fs.existsSync(repoPath)) {
+        fs.copyFileSync(repoPath, tmpPath);
+      } else {
+        fs.writeFileSync(tmpPath, '');
+      }
     }
     return tmpPath;
   }
