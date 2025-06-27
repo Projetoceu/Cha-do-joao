@@ -1,14 +1,15 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 const { getWritablePath } = require('./lib/fileHelper');
 
 const file = getWritablePath('controle-de-produto.json');
 
-function carregarProdutos() {
-  return JSON.parse(fs.readFileSync(file, 'utf8'));
+async function carregarProdutos() {
+  const data = await fs.readFile(file, 'utf8');
+  return JSON.parse(data);
 }
 
-function salvarProdutos(lista) {
-  fs.writeFileSync(file, JSON.stringify(lista, null, 2));
+async function salvarProdutos(lista) {
+  await fs.writeFile(file, JSON.stringify(lista, null, 2));
 }
 
 exports.handler = async (event) => {
@@ -25,7 +26,7 @@ exports.handler = async (event) => {
       return { statusCode: 400, body: JSON.stringify({ error: 'Dados inválidos' }) };
     }
 
-    const produtos = carregarProdutos();
+    const produtos = await carregarProdutos();
     const produto = produtos.find(p => p.id === id);
 
     if (!produto) {
@@ -38,7 +39,7 @@ exports.handler = async (event) => {
     }
 
     produto.cotas = novaCota;
-    salvarProdutos(produtos);
+    await salvarProdutos(produtos);
 
     return { statusCode: 200, body: JSON.stringify({ sucesso: true, produto }) };
   } catch (err) {
