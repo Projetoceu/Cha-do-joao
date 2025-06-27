@@ -22,6 +22,15 @@ function parseCsv(text) {
   });
 }
 
+function normalizar(lista) {
+  return lista.map(p => ({
+    ...p,
+    id: Number(p.id),
+    valor: Number(p.valor),
+    cotas: Number(p.cotas)
+  }));
+}
+
 async function carregarDaPlanilha() {
   try {
     const controller = new AbortController();
@@ -43,7 +52,8 @@ async function obterListaProdutos() {
     try {
       const resp = await fetch(`${API_URL}?lista=produtos`);
       if (resp.ok) {
-        return await resp.json();
+        const lista = await resp.json();
+        return normalizar(lista);
       }
     } catch (err) {
       console.error('Erro ao consultar API:', err);
@@ -52,14 +62,14 @@ async function obterListaProdutos() {
 
   const sheet = await carregarDaPlanilha();
   if (sheet && sheet.length) {
-    return sheet;
+    return normalizar(sheet);
   }
 
   const file = getWritablePath('controle-de-produto.json');
   try {
     await fs.access(file);
     const data = await fs.readFile(file, 'utf8');
-    return JSON.parse(data);
+    return normalizar(JSON.parse(data));
   } catch {
     return [];
   }

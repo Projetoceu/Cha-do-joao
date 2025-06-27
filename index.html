@@ -78,6 +78,10 @@
         const resp = await fetch("/.netlify/functions/listar-produtos");
         if (resp.ok) {
           produtos = await resp.json();
+          produtos = produtos.map(p => ({
+            ...p,
+            valor: Number(p.valor)
+          }));
         } else {
           console.error("Erro ao buscar produtos:", resp.status);
           document.getElementById("presentes").innerHTML = "<p style=\"color:red\">Não foi possível carregar a lista de produtos.</p>";
@@ -93,12 +97,13 @@
       const galeria = document.getElementById('presentes');
       galeria.innerHTML = '';
       produtos.forEach(p => {
+        const valor = Number(p.valor);
         const div = document.createElement('div');
         div.className = 'item';
         div.innerHTML = `
           <div class='emoji'>${p.emoji}</div>
           <h3>${p.nome}</h3>
-          <p style='color:black;font-weight:bold'>Valor: R$ ${p.valor.toFixed(2).replace('.', ',')}</p>
+          <p style='color:black;font-weight:bold'>Valor: R$ ${valor.toFixed(2).replace('.', ',')}</p>
           <p>${p.cotas > 0 ? 'Cotas disponíveis: ' + p.cotas : '<span style="color:red;font-weight:bold">Produto Esgotado</span>'}</p>
           ${p.cotas > 0 ? '<button onclick="abrirModalPagamento(' + p.id + ')">Presentear</button>' : '<button disabled>Esgotado</button>'}
         `;
@@ -115,7 +120,7 @@
           <button onclick='fecharModal(this)' class='modal-close' aria-label='Fechar'>X</button>
           <div style='font-size:64px;'>${produto.emoji}</div>
           <h2>${produto.nome}</h2>
-          <p style='font-size:1.2em;color:black;font-weight:bold'>Valor: R$ ${produto.valor.toFixed(2).replace('.', ',')}</p>
+          <p style='font-size:1.2em;color:black;font-weight:bold'>Valor: R$ ${Number(produto.valor).toFixed(2).replace('.', ',')}</p>
           <p style='font-size:1.1em;color:black'>Chave Pix: <strong>065.755.339-57</strong> <button onclick='copiarChavePix(this)'>Copiar</button></p>
 <p style='font-size:0.75em; color:gray;'>Renato Augusto Dândalo</p>
 <p><img src='QrCode.jpeg' alt='QR Code Pix' style='max-width:180px; margin: 10px auto; display:block;'></p>
