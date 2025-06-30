@@ -15,15 +15,17 @@
     button { background: #5F805F; color: #fff; border: none; padding: 10px; border-radius: 5px; cursor: pointer; margin: 5px; text-transform: uppercase; }
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,.5); justify-content: center; align-items: center; z-index: 1000; }
     .modal.show { display: flex; }
-    /* ajustamos largura e altura da tela de pagamento */
+
     .modal-content {
       background: #fff;
-      padding: 24px;
+      padding: 20px;
       border-radius: 10px;
       box-shadow: 0 0 15px rgba(0,0,0,.3);
       max-width: 308px;
       width: 61.6%;
+
       height: 70%;
+
       text-align: center;
     }
     .modal-close {
@@ -149,11 +151,11 @@
           <p style='font-size:1em;color:black;font-weight:bold'>Valor: R$ ${Number(produto.valor).toFixed(2).replace('.', ',')}</p>
           <p style='font-size:0.9em;color:black'>Chave Pix: <strong>065.755.339-57</strong> <button onclick='copiarChavePix(this)'>Copiar</button></p>
 <p style='font-size:0.6em; color:gray;'>Renato Augusto Dândalo</p>
-<p><img src='QrCode.jpeg' alt='QR Code Pix' style='max-width:144px; margin: 8px auto; display:block;'></p>
-          <div style='text-align:left;margin-top:12px;'>
-            <label>Nome:<br><input id='nome-${produto.id}' maxlength='50' style='width:100%;padding:5px;margin-top:4px;' required></label>
-            <label style='display:block;margin-top:10px;'>Mensagem:<br>
-              <textarea id='msg-${produto.id}' maxlength='500' rows='4' style='width:100%;padding:5px;margin-top:4px;' oninput='atualizarContador(${produto.id})' required></textarea>
+<p><img src='QrCode.jpeg' alt='QR Code Pix' style='max-width:144px; margin: 7px auto; display:block;'></p>
+          <div style='text-align:left;margin-top:10px;'>
+            <label>Nome:<br><input id='nome-${produto.id}' maxlength='50' style='width:100%;padding:4px;margin-top:3px;' required></label>
+            <label style='display:block;margin-top:8px;'>Mensagem:<br>
+              <textarea id='msg-${produto.id}' maxlength='500' rows='4' style='width:100%;padding:4px;margin-top:3px;' oninput='atualizarContador(${produto.id})' required></textarea>
               <div style='text-align:right;font-size:0.7em;'><span id='contador-${produto.id}'>500</span> caracteres restantes</div>
             </label>
           </div>
@@ -195,7 +197,7 @@ async function finalizarModal(id, btn) {
           const resp = await fetch('/.netlify/functions/confirmar-presente', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id, nome, mensagem: msg })
+            body: JSON.stringify({ id, nome, mensagem: msg, produto: produto.nome, valor: produto.valor })
           });
           if (resp.ok) {
             await resp.json();
